@@ -1,4 +1,4 @@
-// ННГУ, ВМК, Курс "Методы программирования-2", С++, ООП
+﻿// ННГУ, ВМК, Курс "Методы программирования-2", С++, ООП
 //
 // utmatrix.h - Copyright (c) Гергель В.П. 07.05.2001
 //   Переработано для Microsoft Visual Studio 2008 Сысоевым А.В. (21.04.2015)
@@ -32,7 +32,7 @@ public:
   ValType& operator[](int pos);             // доступ
   bool operator==(const TVector &v) const;  // сравнение
   bool operator!=(const TVector &v) const;  // сравнение
-  TVector& operator=(const TVector &v);     // присванивание
+  TVector& operator=(const TVector &v);     // присваивание
 
   // скалярные операции
   TVector  operator+(const ValType &val);   // прибавить скаляр
