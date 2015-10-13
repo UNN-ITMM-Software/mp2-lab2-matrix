@@ -16,11 +16,11 @@ const int MAX_VECTOR_SIZE = 100000000;
 const int MAX_MATRIX_SIZE = 10000;
 
 // Шаблон вектора
-template <class ValType>
+
 class TVector
 {
 protected:
-  ValType *pVector;
+  int *pVector;
   int Size;       // размер вектора
   int StartIndex; // индекс первого элемента вектора
 public:
@@ -29,20 +29,20 @@ public:
   ~TVector();
   int GetSize()      { return Size;       } // размер вектора
   int GetStartIndex(){ return StartIndex; } // индекс первого элемента
-  ValType& operator[](int pos);             // доступ
+  int& operator[](int pos);             // доступ
   bool operator==(const TVector &v) const;  // сравнение
   bool operator!=(const TVector &v) const;  // сравнение
   TVector& operator=(const TVector &v);     // присваивание
 
   // скалярные операции
-  TVector  operator+(const ValType &val);   // прибавить скаляр
-  TVector  operator-(const ValType &val);   // вычесть скаляр
-  TVector  operator*(const ValType &val);   // умножить на скаляр
+  TVector  operator+(const int &val);   // прибавить скаляр
+  TVector  operator-(const  int &val);   // вычесть скаляр
+  TVector  operator*(const int &val);   // умножить на скаляр
 
   // векторные операции
   TVector  operator+(const TVector &v);     // сложение
   TVector  operator-(const TVector &v);     // вычитание
-  ValType  operator*(const TVector &v);     // скалярное произведение
+  TVector  operator*(const TVector &v);     // скалярное произведение
 
   // ввод-вывод
   friend istream& operator>>(istream &in, TVector &v)
@@ -59,24 +59,31 @@ public:
   }
 };
 
-template <class ValType>
-TVector<ValType>::TVector(int s, int si)
+TVector::TVector(int s, int si)
 {
+
+
+
 } /*-------------------------------------------------------------------------*/
 
-template <class ValType> //конструктор копирования
-TVector<ValType>::TVector(const TVector<ValType> &v)
-{
+ //конструктор копирования
+TVector::TVector(const TVector &v)
+{ Size = v.Size;
+pVector = new int[Size];
+memcpy(pVector, v.pVector, sizeof(int)*Size);
 } /*-------------------------------------------------------------------------*/
 
-template <class ValType>
-TVector<ValType>::~TVector()
-{
+
+TVector::~TVector()
+{ if (pVector != NULL)
+ delete [] pVector;
+
+
 } /*-------------------------------------------------------------------------*/
 
-template <class ValType> // доступ
-ValType& TVector<ValType>::operator[](int pos)
-{
+ // доступ
+int& TVector::operator[](int pos)
+{ return pVector[pos];
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // сравнение
@@ -84,18 +91,25 @@ bool TVector<ValType>::operator==(const TVector &v) const
 {
 } /*-------------------------------------------------------------------------*/
 
-template <class ValType> // сравнение
-bool TVector<ValType>::operator!=(const TVector &v) const
+ // сравнение
+bool TVector::operator!=(const TVector &v) const
 {
 } /*-------------------------------------------------------------------------*/
 
-template <class ValType> // присваивание
-TVector<ValType>& TVector<ValType>::operator=(const TVector &v)
-{
+ // присваивание
+TVector& TVector::operator=(const TVector &v)
+{  if (this == &v)
+ return *this;
+if ( Size != v.Size)
+{ Size=v.Size;
+delete [] pVector;
+pVector = new int [Size];
+
+
 } /*-------------------------------------------------------------------------*/
 
-template <class ValType> // прибавить скаляр
-TVector<ValType> TVector<ValType>::operator+(const ValType &val)
+ // прибавить скаляр
+TVector<ValType> TVector<ValType>::operator+(const int &val)
 {
 } /*-------------------------------------------------------------------------*/
 
