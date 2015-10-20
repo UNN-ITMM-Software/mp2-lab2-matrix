@@ -199,7 +199,7 @@ ValType TVector<ValType>::operator*(const TVector<ValType> &v)
 	if ((Size != v.Size)||(StartIndex != v.StartIndex)) throw "INVALIDE_SIZE_OF_OPERANDS";
 	ValType tmp = 0;
 	for (int i = StartIndex; i < Size; i++)
-		ValType += pVector[i] * v.pVector[i];
+		tmp += pVector[i] * v.pVector[i];
 	return tmp;
 
 } /*-------------------------------------------------------------------------*/
