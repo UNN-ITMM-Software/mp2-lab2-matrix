@@ -237,6 +237,7 @@ public:
 template <class ValType>
 TMatrix<ValType>::TMatrix(int s): TVector<TVector<ValType> >(s)
 {
+	if ((s < 0)||(s > MAX_MATRIX_SIZE)) throw "INVALIDE_SIZE_OF_MATRIX";
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // конструктор копирования
