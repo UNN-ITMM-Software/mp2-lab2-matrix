@@ -42,10 +42,9 @@ TEST(TVector, copied_vector_has_its_own_memory)
   TVector<int> v1(15);
   v1[7]=1;
   TVector<int> v2(v1);
-  for (int i = v2.GetStartIndex(); i < v2.GetSize(); i++)
-  {
-	  ASSERT_NO_THROW(v2[i]);
-  }
+  v2[7]=2;
+
+  EXPECT_NE(v1, v2);
 }
 
 TEST(TVector, can_get_size)

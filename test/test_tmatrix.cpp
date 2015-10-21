@@ -137,21 +137,45 @@ TEST(TMatrix, matrices_with_different_size_are_not_equal)
 
 TEST(TMatrix, can_add_matrices_with_equal_size)
 {
-  ADD_FAILURE();
+  TMatrix<int> m1(5), m2(5), expm(5);
+  m1[5][5] = 2;
+  m2[5][5] = 3;
+  expm[5][5] = 5;
+
+  EXPECT_EQ(expm, m1 + m2);
 }
 
 TEST(TMatrix, cant_add_matrices_with_not_equal_size)
 {
-  ADD_FAILURE();
+  TMatrix<int> m1(5), m2(10), expm(10);
+  m1[5][5] = 2;
+  m2[5][5] = 3;
+  m2[7][7] = 10;
+  expm[5][5] = 5;
+  expm[7][7] = 10;
+
+  EXPECT_EQ(expm, m1 + m2);
 }
 
 TEST(TMatrix, can_subtract_matrices_with_equal_size)
 {
-  ADD_FAILURE();
+  TMatrix<int> m1(5), m2(5), expm(5);
+  m1[5][5] = 2;
+  m2[5][5] = 3;
+  expm[5][5] = -1;
+
+  EXPECT_EQ(expm, m1 - m2);
 }
 
 TEST(TMatrix, cant_subtract_matrixes_with_not_equal_size)
 {
-  ADD_FAILURE();
+  TMatrix<int> m1(5), m2(10), expm(10);
+  m1[5][5] = 2;
+  m2[5][5] = 3;
+  m2[7][7] = 10;
+  expm[5][5] = -1;
+  expm[7][7] = -10;
+
+  EXPECT_EQ(expm, m1 - m2);
 }
 
