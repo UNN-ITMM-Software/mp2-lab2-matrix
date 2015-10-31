@@ -92,22 +92,36 @@ ValType& TVector<ValType>::operator[](int pos)
 template <class ValType> // сравнение
 bool TVector<ValType>::operator==(const TVector &v) const
 {
+  boolean flag=0;
 
-
-
-
-
-
+   if (this!=&v)
+  {
+    flag=0;
+  }
+  else
+    for (int i=0;i<Size;i++)
+    {
+      if (pVector[i]=v.pVector[i])
+        flag=1;
+      else 
+        return flag;
+    }
+    return flag;
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // сравнение
 bool TVector<ValType>::operator!=(const TVector &v) const
 {
-
-
-
-
-
+  boolean flag=0;
+  if (Size!=v.Size)
+  {
+    flag=0;
+  }
+  else 
+  {
+    flag=1;
+  }
+return flag;
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // присваивание
@@ -131,31 +145,51 @@ TVector<ValType>& TVector<ValType>::operator=(const TVector &v)
 template <class ValType> // прибавить скаляр
 TVector<ValType> TVector<ValType>::operator+(const ValType &val)
 {
-
-
-
-
-
+  int size=0;
+  if (Size>=val.Size)
+    { 
+      size=Size;
+    }
+    else 
+      size=val.Size;
+    TVector res(size);
+    for (int i=0;i<Size;i++)
+   {
+     res.pVector[i]=pVector[i]+val.pVector[i];
+   }
+   return res;
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // вычесть скаляр
 TVector<ValType> TVector<ValType>::operator-(const ValType &val)
 {
-
-
-
-
-
+  int size=0;
+  if (Size>=val.Size)
+    { 
+      size=Size;
+    }
+    else 
+      size=val.Size;
+    TVector res(size);
+    for (int i=0;i<Size;i++)
+   {
+     res.pVector[i]=pVector[i]-val.pVector[i];
+   }
+   return res;
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // умножить на скаляр
 TVector<ValType> TVector<ValType>::operator*(const ValType &val)
 {
+ TVector temp(Size);
 
+   for (int i=0;i<Size;i++)
 
+   {
+     temp.pVector[i]=pVector[i]*val.pVector[i];
+   }
 
-
-
+   return temp;
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // сложение
@@ -273,12 +307,7 @@ TMatrix<ValType> TMatrix<ValType>::operator+(const TMatrix<ValType> &mt)
 template <class ValType> // вычитание
 TMatrix<ValType> TMatrix<ValType>::operator-(const TMatrix<ValType> &mt)
 {
-
-
-
-
-  
-
+  return TVector<TVector<ValType>>::operator-(mt);
 } /*-------------------------------------------------------------------------*/
 
 // TVector О3 Л2 П4 С6
