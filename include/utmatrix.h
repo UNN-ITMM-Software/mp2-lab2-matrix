@@ -62,31 +62,112 @@ public:
 template <class ValType>
 TVector<ValType>::TVector(int s, int si)
 {
+	if ((si<0) || (si>MAX_VECTOR_SIZE)
+	{
+		throw"Error!";
+	}
+	if ((s<0) || (s>MAX_MATRIX_SIZE)
+	{
+		throw"Error!";
+	}
+	Size = s;
+	StartIndex = si;
+	pVector = new ValType[Size];
+	for (int i = StartIndex; i < Size; i++)
+	{
+		pVector[i] = 0;
+	}
 } /*-------------------------------------------------------------------------*/
+
+
 
 template <class ValType> //конструктор копирования
 TVector<ValType>::TVector(const TVector<ValType> &v)
 {
+	Size = v.Size;
+	StartIndex = v.StartIndex;
+	pVector = new ValType[v.Size];
+	for (int i = v.StartIndex; i < v.Size; i++)
+	{
+		pVector[i] = v.pVector[i];
+	}
 } /*-------------------------------------------------------------------------*/
+
+
+
 
 template <class ValType>
 TVector<ValType>::~TVector()
 {
+	delete[]pVector;
 } /*-------------------------------------------------------------------------*/
+
+
+
+
 
 template <class ValType> // доступ
 ValType& TVector<ValType>::operator[](int pos)
 {
+	if ((pos<0) || (pos>=(Size+StartIndex)
+	{
+		throw"Error!";
+	}
+	else if (pos < StartIndex)
+	{
+		throw"Error!";
+	}
+	return pVector[pos - StartIndex];
 } /*-------------------------------------------------------------------------*/
+
+
+
 
 template <class ValType> // сравнение
 bool TVector<ValType>::operator==(const TVector &v) const
 {
+	bool tmp=true;
+	if (StartIndex != v.StartIndex)
+	{
+		tmp = false;
+	}
+	if(Size != v.Size)
+	{
+		tmp = false;
+	}
+	for (int i = 0; i < Size; i++)
+	{
+		if (pVector[i] != v.pVector[i])
+		{
+			tmp = false;
+		}
+	}
+	return tmp;
 } /*-------------------------------------------------------------------------*/
+
+
+
 
 template <class ValType> // сравнение
 bool TVector<ValType>::operator!=(const TVector &v) const
 {
+	bool tmp = false;
+	if (StartIndex != v.StartIndex)
+	{
+		tmp = true;
+	}
+	if (Size != v.Size)
+	{
+		tmp = true;
+	}
+	for (int i = 0; i < Size; i++)
+	{
+		if (pVector[i] != v.pVector[i])
+		{
+			tmp = true;
+		}
+	}
+	return tmp;
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // присваивание
