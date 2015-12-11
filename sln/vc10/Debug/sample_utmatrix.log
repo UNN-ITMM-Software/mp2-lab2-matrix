@@ -1,0 +1,20 @@
+﻿Построение начато 11.12.2015 16:02:43.
+     1>Проект "C:\Users\Александр\Desktop\Программ\mp2-lab2-matrix\sln\vc10\sample_utmatrix.vcxproj" в узле 2 (целевые объекты build).
+     1>InitializeBuildStatus:
+         Создание "Debug\sample_utmatrix.unsuccessfulbuild", так как было задано "AlwaysCreate".
+       ClCompile:
+         Для всех выходных данных обновления не требуется.
+       ManifestResourceCompile:
+         Для всех выходных данных обновления не требуется.
+       Link:
+         Для всех выходных данных обновления не требуется.
+       Manifest:
+         Для всех выходных данных обновления не требуется.
+       FinalizeBuildStatus:
+         Файл "Debug\sample_utmatrix.unsuccessfulbuild" удаляется.
+         Обращение к "Debug\sample_utmatrix.lastbuildstate".
+     1>Построение проекта "C:\Users\Александр\Desktop\Программ\mp2-lab2-matrix\sln\vc10\sample_utmatrix.vcxproj" завершено (целевые объекты build).
+
+Построение успешно завершено.
+
+Затраченное время: 00:00:00.05
