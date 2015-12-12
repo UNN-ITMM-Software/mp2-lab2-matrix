@@ -44,3 +44,5 @@
 *.pdb
 *.lastbuildstate
 *.unsuccessfulbuild
+*.opensdf
+*.cache
