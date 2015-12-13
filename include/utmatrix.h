@@ -63,9 +63,9 @@ template <class ValType>
 TVector<ValType>::TVector(int s, int si)
 {
 	if ((s < 0) || (s > MAX_VECTOR_SIZE))
-		throw ("Razmer vectora nevernyi");
+		throw ("Our of range");
 	if ((si < 0) || (si >= s))
-		throw ("Index nevernyi");
+		throw ("error idx");
 	Size = s - si;
 	StartIndex = si;
 	pVector = new ValType[Size];
@@ -90,7 +90,7 @@ TVector<ValType>::~TVector()
 template <class ValType> // доступ
 ValType& TVector<ValType>::operator[] (int pos)
 {
-	if ((pos < StartIndex) || (pos >= Size + StartIndex)) throw "Nevernaya pozitsia";
+	if ((pos < StartIndex) || (pos >= Size + StartIndex)) throw "Error start idx";
     return pVector[pos - StartIndex];
 } /*-------------------------------------------------------------------------*/
 
@@ -169,7 +169,7 @@ template <class ValType> // сложение
 TVector<ValType> TVector<ValType>::operator+(const TVector<ValType> &v)
 {
 	if (Size != v.Size)
-        throw ("Vectora dolzhny bit' odnogo razmera");
+        throw ("Error vector size");
     TVector tmp(*this);
     for (int i = 0; i < Size; i++)
         tmp.pVector[i] += v.pVector[i];
@@ -180,7 +180,7 @@ template <class ValType> // вычитание
 TVector<ValType> TVector<ValType>::operator-(const TVector<ValType> &v)
 {
 	if (Size != v.Size)
-        throw ("Vectora dolzhny bit' odnogo razmera");
+        throw ("Error vector size");
     TVector tmp(*this);
     for (int i = 0; i < Size; i++)
         tmp.pVector[i] -= v.pVector[i];
@@ -191,7 +191,7 @@ template <class ValType> // скалярное произведение
 ValType TVector<ValType>::operator*(const TVector<ValType> &v)
 {
 	if (Size != v.Size)
-        throw ("Vectora dolzhny bit' odnogo razmera");
+        throw ("Error vector size");
     TVector tmp(*this);
     ValType summ = 0;
     for (int i = 0; i < Size; i++)
@@ -233,7 +233,7 @@ template <class ValType>
 TMatrix<ValType>::TMatrix(int s): TVector<TVector<ValType> >(s)
 {
 	if ((s < 0) || (s > MAX_MATRIX_SIZE))
-		throw exception("Razmer nevernyi");
+		throw exception("Error vector size");
 	for (int i = 0; i < s; i++)
 		pVector[i] = TVector<ValType>(s, i);
 	for(int i = 0; i < s; i++)
@@ -302,7 +302,7 @@ template <class ValType> // сложение
 TMatrix<ValType> TMatrix<ValType>::operator+(const TMatrix<ValType> &mt)
 {
     if (Size != mt.Size)
-        throw ("Dolzhny bit' odnogo razmera");
+        throw ("Error matrix size");
     TMatrix<ValType> tmp(*this);
     for (int i = StartIndex; i < Size; i++)
         tmp.pVector[i] = tmp.pVector[i] + mt.pVector[i];
@@ -313,7 +313,7 @@ template <class ValType> // вычитание
 TMatrix<ValType> TMatrix<ValType>::operator-(const TMatrix<ValType> &mt)
 {
 	 if (Size != mt.Size)
-        throw ("Dolzhny bit' odnogo razmera");
+        throw ("Error matrix size");
     TMatrix<ValType> tmp (*this);
     for (int i = StartIndex; i < Size; i++)
         tmp.pVector[i] = tmp.pVector[i] - mt.pVector[i];
