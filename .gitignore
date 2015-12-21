@@ -29,3 +29,20 @@
 *.exe
 *.out
 *.app
+
+# Other
+*.vcxproj
+*.vcxproj.*
+*.tlog
+*.suo
+*.ipch
+*.manifest
+*.sdf
+*.log
+*.rc
+*.idb
+*.pdb
+*.lastbuildstate
+*.unsuccessfulbuild
+*.opensdf
+*.cache
