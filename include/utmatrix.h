@@ -70,7 +70,7 @@ TVector<ValType>::TVector(int s, int si)
 		exception ("negative or too big index");
 	Size = s - si;
 	StartIndex = si;
-	pVector = new ValType[s];
+	pVector = new ValType[Size];
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> //конструктор копирования
@@ -93,10 +93,13 @@ TVector<ValType>::~TVector()
 template <class ValType> // доступ
 ValType& TVector<ValType>::operator[](int pos)
 {
-	if((pos < 0) || (pos > Size))
+	if((pos < 0) || (pos >= Size + StartIndex))
 		throw
 		exception ("incorrect index");
-	return pVector[pos];
+	if(pos < StartIndex)
+		throw
+		exception ("can't to change it");
+	return pVector[pos - StartIndex];
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // сравнение
@@ -105,11 +108,14 @@ bool TVector<ValType>::operator==(const TVector &v) const
 	bool t = true;
 	if(Size == v.Size)
 	{
-		for (int i = StartIndex; i < Size; i++)
+		if (StartIndex == v.StartIndex)
 		{
-			if(pVector[i] != v.pVector[i])
-				t = false;
-			break;
+			for (int i = 0; i < Size; i++)
+			{
+				if(pVector[i] != v.pVector[i])
+					t = false;
+				break;
+			}
 		}
 	}
 	else
@@ -132,7 +138,7 @@ TVector<ValType>& TVector<ValType>::operator=(const TVector &v)
 		Size = v.Size;
 		StartIndex = v.StartIndex;
 		pVector = new ValType[Size];
-		for(int i = StartIndex; i < Size; i++)
+		for(int i = 0; i < Size; i++)
 			pVector[i] = v.pVector[i];
 	}
 	return *this;
