@@ -152,3 +152,11 @@ TEST(TMatrix, cant_subtract_matrixes_with_not_equal_size)
 	ASSERT_ANY_THROW(m1 - m2);
 }
 
+///////////////////
+TEST(TMatrix, compare_not_equal_matrices_return_true)
+{//ujnjdj
+	TMatrix<int> m1(5), m2(5);
+	m1[1][1] = 4;
+	m2[1][1] = 5;
+	ASSERT_TRUE(m1 != m2);
+}
