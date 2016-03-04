@@ -97,7 +97,7 @@ ValType& TVector<ValType>::operator[](int pos)
 {
 	if ((pos < StartIndex) || (pos >= (Size + StartIndex)))
 		throw ("Incorrect index");
-	return pVector[pos - StartIndex]; 
+	return pVector[pos]; 
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // сравнение
