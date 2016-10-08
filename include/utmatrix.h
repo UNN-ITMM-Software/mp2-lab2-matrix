@@ -256,18 +256,30 @@ TMatrix<ValType>& TMatrix<ValType>::operator=(const TMatrix<ValType> &mt)
 	Size = mt.Size;
 	for(int i = 0; i < Size; i++)
 		pVector[i] = mt.pVector[i];
+	return *this;
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // сложение
 TMatrix<ValType> TMatrix<ValType>::operator+(const TMatrix<ValType> &mt)
 {
-	
+	TMatrix<ValType> sum(*this);
+	if(mt.Size != Size)
+		throw -1;
+	for(int i = 0; i < Size; i++)
+		sum.pVector[i] += mt.pVector[i];
+	return sum;
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // вычитание
 TMatrix<ValType> TMatrix<ValType>::operator-(const TMatrix<ValType> &mt)
 {
-	
+	TMatrix<ValType> sub(*this);
+	StartIndex = mt.StartIndex;
+	if(mt.Size != Size)
+		throw -1;
+	for(int i = 0; i < Size; i++)
+		sub.pVector[i] -= mt.pVector[i];
+	return sub;
 } /*-------------------------------------------------------------------------*/
 
 // TVector О3 Л2 П4 С6
