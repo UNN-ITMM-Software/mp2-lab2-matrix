@@ -62,7 +62,7 @@ public:
 template <class ValType>
 TVector<ValType>::TVector(int s, int si)
 {
-	if(s>=0)
+	if((s>=0)&&(s<=MAX_VECTOR_SIZE)&&(si>=0)&&(si<=MAX_VECTOR_SIZE))
 	{
 		Size=s;
 		StartIndex=si;
@@ -238,14 +238,14 @@ public:
   // ввод / вывод
   friend istream& operator>>(istream &in, TMatrix &mt)
   {
-    for (int i = 0; i < mt.Size; i++)
-      in >> mt.pVector[i];
+    //for (int i = 0; i < mt.Size; i++)
+    //  in >> mt.pVector[i];
     return in;
   }
   friend ostream & operator<<( ostream &out, const TMatrix &mt)
   {
-    for (int i = 0; i < mt.Size; i++)
-      out << mt.pVector[i] << endl;
+    //for (int i = 0; i < mt.Size; i++)
+    //  out << mt.pVector[i] << endl;
     return out;
   }
 };
@@ -253,6 +253,7 @@ public:
 template <class ValType>
 TMatrix<ValType>::TMatrix(int s): TVector<TVector<ValType> >(s)
 {
+	if(s>MAX_MATRIX_SIZE) throw 1;
 } //-------------------------------------------------------------------------
 
 template <class ValType> // конструктор копирования
