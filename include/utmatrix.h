@@ -62,7 +62,7 @@ public:
 template <class ValType>
 TVector<ValType>::TVector(int s, int si)
 {
-	if((s>=0)&&(s<=MAX_VECTOR_SIZE)&&(si>=0)&&(si<=MAX_VECTOR_SIZE))
+	if((s>=0)&&(s<MAX_VECTOR_SIZE)&&(si>=0)&&(si<MAX_VECTOR_SIZE))
 	{
 		Size=s;
 		StartIndex=si;
@@ -115,7 +115,14 @@ bool TVector<ValType>::operator==(const TVector &v) const
 			if(pVector[i]!=v.pVector[i]) f=0;
 		}
 	}
-	return f;
+	if(f)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 } //-------------------------------------------------------------------------
 
 template <class ValType> // сравнение
@@ -169,10 +176,12 @@ TVector<ValType> TVector<ValType>::operator-(const ValType &val)
 template <class ValType> // умножить на скаляр
 TVector<ValType> TVector<ValType>::operator*(const ValType &val)
 {
+	TVector res(Size);
 	for(int i=0;i<Size;i++)
 	{
-		pVector[i]=val*pVector[i];
+		res.pVector[i]=val*pVector[i];
 	}
+	return res;
 } //-------------------------------------------------------------------------
 
 template <class ValType> // сложение
@@ -202,7 +211,7 @@ TVector<ValType> TVector<ValType>::operator-(const TVector<ValType> &v)
 		}
 		return res;
 	}
-	else throw non_equal_index;
+	else throw 1;
 } //-------------------------------------------------------------------------
 
 template <class ValType> // скалярное произведение
@@ -217,7 +226,7 @@ ValType TVector<ValType>::operator*(const TVector<ValType> &v)
 		}
 		return res;
 	}
-	else throw non_equal_index;
+	else throw 1;
 } //-------------------------------------------------------------------------
 
 
@@ -253,7 +262,7 @@ public:
 template <class ValType>
 TMatrix<ValType>::TMatrix(int s): TVector<TVector<ValType> >(s)
 {
-	if(s>MAX_MATRIX_SIZE) throw 1;
+	if((s<0)&&(s>=MAX_VECTOR_SIZE)) throw 1;
 } //-------------------------------------------------------------------------
 
 template <class ValType> // конструктор копирования

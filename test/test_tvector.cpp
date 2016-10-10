@@ -174,7 +174,7 @@ TEST(TVector, can_multiply_scalar_by_vector)
 	v[1]=1;
 	res=v*3;
 
-	EXPECT_EQ(3,res[3]);
+	EXPECT_EQ(3,res[1]);
 }
 
 TEST(TVector, can_add_vectors_with_equal_size)
@@ -203,21 +203,45 @@ TEST(TVector, cant_add_vectors_with_not_equal_size)
 
 TEST(TVector, can_subtract_vectors_with_equal_size)
 {
-  ADD_FAILURE();
+	TVector<int> v1(3);
+	TVector<int> v2(3);
+	TVector<int> res(3);
+
+	v1[1]=1;
+	v1[2]=2;
+	v2[2]=1;
+	res=v1-v2;
+
+	EXPECT_EQ(1, res[1]);
+	EXPECT_EQ(1, res[2]);
 }
 
 TEST(TVector, cant_subtract_vectors_with_not_equal_size)
 {
-  ADD_FAILURE();
+	TVector<int> v1(3);
+	TVector<int> v2(4);
+
+	ASSERT_ANY_THROW(v1-v2;);
 }
 
 TEST(TVector, can_multiply_vectors_with_equal_size)
 {
-  ADD_FAILURE();
+	TVector<int> v1(3);
+	TVector<int> v2(3);
+	TVector<int> res(3);
+
+	v1[1]=1;
+	v1[2]=2;
+	v2[2]=1;
+	
+	EXPECT_EQ(2, v1*v2);
 }
 
 TEST(TVector, cant_multiply_vectors_with_not_equal_size)
 {
-  ADD_FAILURE();
+	TVector<int> v1(3);
+	TVector<int> v2(4);
+
+	ASSERT_ANY_THROW(v1*v2;);
 }
 
