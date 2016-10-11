@@ -276,13 +276,13 @@ TMatrix<ValType>::TMatrix(const TVector<TVector<ValType> > &mt):
 template <class ValType> // сравнение
 bool TMatrix<ValType>::operator==(const TMatrix<ValType> &mt) const
 {
-	return pVector<TVector<ValType> >==mt.pVector<TVector<ValType> >;
+	return (*this).TVector::operator==(mt);
 } //-------------------------------------------------------------------------
 
 template <class ValType> // сравнение
 bool TMatrix<ValType>::operator!=(const TMatrix<ValType> &mt) const
 {
-	return pVector<TVector<ValType> >!=mt.pVector<TVector<ValType> >;
+	return (*this).TVector::operator!=(mt);
 } //-------------------------------------------------------------------------
 
 template <class ValType> // присваивание
@@ -304,7 +304,7 @@ template <class ValType> // вычитание
 TMatrix<ValType> TMatrix<ValType>::operator-(const TMatrix<ValType> &mt)
 {
 	TMatrix<ValType> res(Size);
-	res.pVector<TVector<ValType> >=pVector<TVector<ValType> >-mt.pVector<TVector<ValType> >;
+	res=(*this).TVector::operator-(mt);
 	return res;
 } //-------------------------------------------------------------------------
 
