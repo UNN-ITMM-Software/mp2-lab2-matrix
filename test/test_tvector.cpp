@@ -43,10 +43,12 @@ TEST(TVector, copied_vector_is_equal_to_source_one)
 TEST(TVector, copied_vector_has_its_own_memory)
 {
   TVector<int> v(3);
+
+  v[2]=1;
   {
 	  TVector<int> tempV(v);
   }
-  EXPECT_EQ(0,v[2]);
+  EXPECT_EQ(1,v[2]);
 }
 
 TEST(TVector, can_get_size)

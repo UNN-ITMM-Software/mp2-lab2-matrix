@@ -262,7 +262,7 @@ public:
 template <class ValType>
 TMatrix<ValType>::TMatrix(int s): TVector<TVector<ValType> >(s)
 {
-	if((s<0)&&(s>=MAX_VECTOR_SIZE)) throw 1;
+	if((s<0)||(s>=MAX_MATRIX_SIZE)) throw 1;
 } //-------------------------------------------------------------------------
 
 template <class ValType> // конструктор копирования
