@@ -32,7 +32,8 @@ public:
   ValType& operator[](int pos);             // доступ
   bool operator==(const TVector &v) const;  // сравнение
   bool operator!=(const TVector &v) const;  // сравнение
-  TVector& operator=(const TVector &v);     // присваивание
+  TVector& operator=(const TVector &v);		// присваивание
+  TVector& operator=(ValType c);			// инициализация
 
   // скалярные операции
   TVector  operator+(const ValType &val);   // прибавить скаляр
@@ -158,8 +159,18 @@ TVector<ValType>& TVector<ValType>::operator=(const TVector &v)
 			pVector[i]=v.pVector[i];
 		}
 	}
-	return*this;
-} //-------------------------------------------------------------------------
+	return *this;
+} //-------------------------------------------------------------------------	
+
+template <class ValType> // инициализация
+TVector<ValType>& TVector<ValType>::operator=(ValType c)
+{
+	for(int i=0;i<Size;i++)
+	{
+		(*this).pVector[i]=c;
+	}
+	return *this;
+}
 
 template <class ValType> // прибавить скаляр
 TVector<ValType> TVector<ValType>::operator+(const ValType &val)
@@ -235,6 +246,7 @@ template <class ValType>
 class TMatrix : public TVector<TVector<ValType> >
 {
 public:
+	int a;
   TMatrix(int s = 10);                           
   TMatrix(const TMatrix &mt);                    // копирование
   TMatrix(const TVector<TVector<ValType> > &mt); // преобразование типа
@@ -262,7 +274,10 @@ public:
 template <class ValType>
 TMatrix<ValType>::TMatrix(int s): TVector<TVector<ValType> >(s)
 {
-	if((s<0)||(s>=MAX_MATRIX_SIZE)) throw 1;
+	if((s>0)&&(s<MAX_MATRIX_SIZE)) 
+	{
+	}
+	else throw 1;
 } //-------------------------------------------------------------------------
 
 template <class ValType> // конструктор копирования

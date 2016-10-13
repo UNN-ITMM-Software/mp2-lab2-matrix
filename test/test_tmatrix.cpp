@@ -45,6 +45,14 @@ TEST(TMatrix, copied_matrix_has_its_own_memory)
 
   EXPECT_EQ(3, m[3][3]);
 }
+
+TEST(TMatrix, size_of_matrix_element)
+{
+	TMatrix<int> m(3);
+
+	EXPECT_EQ(3, m[0].GetSize());
+}
+
 TEST(TMatrix, start_elem_eqil_zero)
 {
 	int s=0, n=5;
@@ -217,7 +225,7 @@ TEST(TMatrix, cant_subtract_matrixes_with_not_equal_size)
 TEST(TMatrix, 111)
 {
 	TMatrix<int> m(1);
-
+	m.a =m[0][0];
 	EXPECT_EQ(0, m[0][0]);
 }
 
@@ -233,7 +241,8 @@ TEST(TMatrix, 222)
 TEST(TMatrix, 333)
 {
 	TMatrix<int> m(1);
+	TVector<int> v(1);
 
-	EXPECT_EQ(0, m[0][0]);
+	EXPECT_EQ(1, m[0].TVector::operator==(v));
 }
 
