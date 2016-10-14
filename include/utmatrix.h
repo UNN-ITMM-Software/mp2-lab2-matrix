@@ -60,14 +60,16 @@ public:
   }
 };
 
+//------------------------------------------переписать-функции-учитывая-поправки-конструкоров!------------------------
+
 template <class ValType>
 TVector<ValType>::TVector(int s, int si)
 {
-	if((s>=0)&&(s<MAX_VECTOR_SIZE)&&(si>=0)&&(si<MAX_VECTOR_SIZE))
+	if((s>=0)&&(s<MAX_VECTOR_SIZE)&&(si>=0)&&(si<MAX_VECTOR_SIZE)&&(s>si))
 	{
 		Size=s;
 		StartIndex=si;
-		pVector = new ValType[s];
+		pVector = new ValType[s-si];
 		for(int i=0;i<Size;i++)
 		{
 			pVector[i]=0;
@@ -97,7 +99,7 @@ TVector<ValType>::~TVector()
 template <class ValType> // доступ
 ValType& TVector<ValType>::operator[](int pos)
 {
-	if((pos>=0)&&(pos<Size))
+	if((pos>=0)&&(pos<Size)&&(pos>=StartIndex))
 	{
 		return pVector[pos];
 	}
@@ -276,6 +278,10 @@ TMatrix<ValType>::TMatrix(int s): TVector<TVector<ValType> >(s)
 {
 	if((s>0)&&(s<MAX_MATRIX_SIZE)) 
 	{
+		for(int i=0;i<s;i++)
+		{
+			pVector[i]=TVector<ValType>(s-i,s);
+		}
 	}
 	else throw 1;
 } //-------------------------------------------------------------------------
