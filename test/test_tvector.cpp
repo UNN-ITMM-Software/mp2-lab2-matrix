@@ -40,6 +40,15 @@ TEST(TVector, copied_vector_is_equal_to_source_one)
   EXPECT_EQ(0,copyV[2]);
 }
 
+TEST(TVector, copied_vector_with_start_index)
+{
+  TVector<int> v(3,2);
+  v[2]=3;
+  TVector<int> copyV(v);
+
+  EXPECT_EQ(3,copyV[2]);
+}
+
 TEST(TVector, copied_vector_has_its_own_memory)
 {
   TVector<int> v(3);
@@ -104,6 +113,18 @@ TEST(TVector, can_assign_vectors_of_equal_size)
 
 	EXPECT_EQ(3,v2[2]);
 }
+
+TEST(TVector, can_assign_vectors_with_StartIndex)
+{
+	TVector<int> v1(3,2);
+	TVector<int> v2(3);
+
+	v1[2]=3;
+	v2=v1;
+
+	//ASSERT_NO_THROW(v2=v1;);
+	EXPECT_EQ(3,v2[2]);
+}//---------------------------------------------
 
 TEST(TVector, assign_operator_change_vector_size)
 {
