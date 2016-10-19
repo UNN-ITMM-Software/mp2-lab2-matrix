@@ -32,6 +32,8 @@ TEST(TVector, can_create_copied_vector)
 TEST(TVector, copied_vector_is_equal_to_source_one)
 {
   TVector<int> v(10);
+  for (int i = 0; i < 10; i++)
+      v[i] = i;
   TVector<int> v1(v);
 
   EXPECT_EQ(v, v1);
@@ -117,6 +119,8 @@ TEST(TVector, can_assign_vectors_of_different_size)
 TEST(TVector, compare_equal_vectors_return_true)
 {
   TVector<int> v(3);
+  for (int i = 0; i < 3; i++)
+      v[i] = i;
   TVector<int> v1(v);
 
   EXPECT_EQ(1, v == v1);
@@ -140,10 +144,12 @@ TEST(TVector, vectors_with_different_size_are_not_equal)
 TEST(TVector, can_add_scalar_to_vector)
 {
   TVector<int> v(5);
+  for (int i = 0; i < 5; i++)
+      v[1] = 1;
   TVector<int> v1(5);
   v = v + 5;
   for (int i = 0; i < 5; i++)
-	  v1[i] = 5;
+	  v1[i] = 6;
 
   EXPECT_EQ(1, v == v1);
 }
@@ -151,10 +157,12 @@ TEST(TVector, can_add_scalar_to_vector)
 TEST(TVector, can_subtract_scalar_from_vector)
 {
   TVector<int> v(5);
+  for (int i = 0; i < 5; i++)
+      v[1] = 1;
   TVector<int> v1(5);
   v = v - 5;
   for (int i = 0; i < 5; i++)
-	  v1[i] = -5;
+	  v1[i] = -4;
 
   EXPECT_EQ(1, v == v1);
 }
@@ -177,7 +185,7 @@ TEST(TVector, can_add_vectors_with_equal_size)
   TVector<int> v(5);
   TVector<int> v1(5);
 
-  ASSERT_NO_THROW(v = v + v1);
+  ASSERT_NO_THROW(v + v1);
 }
 
 TEST(TVector, cant_add_vectors_with_not_equal_size)
@@ -185,7 +193,7 @@ TEST(TVector, cant_add_vectors_with_not_equal_size)
   TVector<int> v(3);
   TVector<int> v1(5);
 
-  ASSERT_ANY_THROW(v = v + v1);
+  ASSERT_ANY_THROW(v + v1);
 }
 
 TEST(TVector, can_subtract_vectors_with_equal_size)
@@ -193,7 +201,7 @@ TEST(TVector, can_subtract_vectors_with_equal_size)
   TVector<int> v(5);
   TVector<int> v1(5);
 
-  ASSERT_NO_THROW(v = v - v1);
+  ASSERT_NO_THROW(v - v1);
 }
 
 TEST(TVector, cant_subtract_vectors_with_not_equal_size)
@@ -201,7 +209,7 @@ TEST(TVector, cant_subtract_vectors_with_not_equal_size)
   TVector<int> v(3);
   TVector<int> v1(5);
 
-  ASSERT_ANY_THROW(v = v - v1);
+  ASSERT_ANY_THROW(v - v1);
 }
 
 TEST(TVector, can_multiply_vectors_with_equal_size)
@@ -209,7 +217,7 @@ TEST(TVector, can_multiply_vectors_with_equal_size)
   TVector<int> v(5);
   TVector<int> v1(5);
 
-  ASSERT_NO_THROW(v = v * v1);
+  ASSERT_NO_THROW(v * v1);
 }
 
 TEST(TVector, cant_multiply_vectors_with_not_equal_size)
@@ -217,6 +225,6 @@ TEST(TVector, cant_multiply_vectors_with_not_equal_size)
   TVector<int> v(3);
   TVector<int> v1(5);
 
-  ASSERT_ANY_THROW(v = v * v1);
+  ASSERT_ANY_THROW(v * v1);
 }
 
