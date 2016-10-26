@@ -205,6 +205,8 @@ TMatrix<ValType>& TMatrix<ValType>::operator=(const TMatrix<ValType> &mt)
 template <class ValType> // сложение
 TMatrix<ValType> TMatrix<ValType>::operator+(const TMatrix<ValType> &mt)
 {
+	if (Size != mt.Size)
+		throw ("matrices have different sizes");
     tmp = *this;
     tmp.pVector = new TVector<ValType>[Size];
     for (int i = 0; i < Size; i++)
@@ -215,6 +217,8 @@ TMatrix<ValType> TMatrix<ValType>::operator+(const TMatrix<ValType> &mt)
 template <class ValType> // вычитание
 TMatrix<ValType> TMatrix<ValType>::operator-(const TMatrix<ValType> &mt)
 {
+	if (Size != mt.Size)
+		throw ("matrices have different sizes");
     tmp = *this;
     tmp.pVector = new TVector<ValType>[Size];
     for (int i = 0; i < Size; i++)
