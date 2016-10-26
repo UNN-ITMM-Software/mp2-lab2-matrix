@@ -194,8 +194,7 @@ TMatrix<ValType>& TMatrix<ValType>::operator=(const TMatrix<ValType> &mt)
     if (Size != mt.Size) {
         delete[] pVector;
         Size = mt.Size;
-        StartIndex = mt.StartIndex;
-        pVector = new ValType[Size];
+        pVector = new TVector<ValType>[Size];
     }
     for (int i = 0; i < Size; i++)
         pVector[i] = mt.pVector[i];
@@ -207,8 +206,7 @@ TMatrix<ValType> TMatrix<ValType>::operator+(const TMatrix<ValType> &mt)
 {
 	if (Size != mt.Size)
 		throw ("matrices have different sizes");
-    tmp = *this;
-    tmp.pVector = new TVector<ValType>[Size];
+    TMatrix<ValType> tmp(*this);
     for (int i = 0; i < Size; i++)
         tmp.pVector[i] = pVector[i] + mt.pVector[i];
     return tmp;
@@ -219,8 +217,7 @@ TMatrix<ValType> TMatrix<ValType>::operator-(const TMatrix<ValType> &mt)
 {
 	if (Size != mt.Size)
 		throw ("matrices have different sizes");
-    tmp = *this;
-    tmp.pVector = new TVector<ValType>[Size];
+    TMatrix<ValType> tmp(*this);
     for (int i = 0; i < Size; i++)
         tmp.pVector[i] = pVector[i] - mt.pVector[i];
     return tmp;
