@@ -87,7 +87,21 @@ TVector<ValType>::~TVector()
 template <class ValType> // доступ
 ValType& TVector<ValType>::operator[](int pos)
 {
-
+	if (s > MAX_VECTOR_SIZE) {
+		throw 'Big';
+	}
+	if (s < 0) {
+		throw 'Neg';
+	}
+	if (si < 0) {
+		throw 'Neg';
+	}
+	pVector = new ValType[s];
+	Size = s;
+	StartIndex = si;
+	for (int i = StartIndex; i < Size + StartIndex; i++) {
+		(*this)[i] = ValType();
+	}
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // сравнение
@@ -243,27 +257,32 @@ TMatrix<ValType>::TMatrix(const TVector<TVector<ValType> > &mt):
 template <class ValType> // сравнение
 bool TMatrix<ValType>::operator==(const TMatrix<ValType> &mt) const
 {
+	return false;
 
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // сравнение
 bool TMatrix<ValType>::operator!=(const TMatrix<ValType> &mt) const
 {
+	return false;
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // присваивание
 TMatrix<ValType>& TMatrix<ValType>::operator=(const TMatrix<ValType> &mt)
 {
+	return *this;
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // сложение
 TMatrix<ValType> TMatrix<ValType>::operator+(const TMatrix<ValType> &mt)
 {
+	return *this;
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // вычитание
 TMatrix<ValType> TMatrix<ValType>::operator-(const TMatrix<ValType> &mt)
 {
+	return *this;
 } /*-------------------------------------------------------------------------*/
 
 // TVector О3 Л2 П4 С6
