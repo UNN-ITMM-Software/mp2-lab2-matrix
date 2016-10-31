@@ -87,21 +87,16 @@ TVector<ValType>::~TVector()
 template <class ValType> // доступ
 ValType& TVector<ValType>::operator[](int pos)
 {
-	if (s > MAX_VECTOR_SIZE) {
+	if (pos<0) {
+		throw 'Neg';
+	}
+	if (pos >= StartIndex + Size) {
 		throw 'Big';
 	}
-	if (s < 0) {
-		throw 'Neg';
+	if (pos<StartIndex) {
+		return *new ValType();
 	}
-	if (si < 0) {
-		throw 'Neg';
-	}
-	pVector = new ValType[s];
-	Size = s;
-	StartIndex = si;
-	for (int i = StartIndex; i < Size + StartIndex; i++) {
-		(*this)[i] = ValType();
-	}
+	return (pVector[pos - StartIndex]);
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // сравнение
@@ -136,14 +131,15 @@ TVector<ValType>& TVector<ValType>::operator=(const TVector &v)
 {
 	if (this != &v)
 	{
-		if (size != v.size)
+		if (Size != v.Size)
 		{
 			delete[] pVector;
 			pVector = new ValType[v.Size];
 		}
 		Size = v.Size; StartIndex = v.StartIndex;
-		for (int i = StartIndex; i < Size + StartIndex; i++ )
-			((*this)[i]) = v[i]; //pVector[i]=v.pVector[i]
+		for (int i = StartIndex; i < Size + StartIndex; i++)
+			//((*this)[i]) = v[i]; //
+			pVector[i] = v.pVector[i];
 	}
 	return *this;
 } /*-------------------------------------------------------------------------*/
