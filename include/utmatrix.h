@@ -81,7 +81,7 @@ TVector<ValType>::TVector(const TVector<ValType> &v)
 template <class ValType>
 TVector<ValType>::~TVector()
 {
-	delere[] pVector;
+	delete[] pVector;
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // доступ
@@ -189,6 +189,12 @@ TVector<ValType> TVector<ValType>::operator-(const TVector<ValType> &v)
 template <class ValType> // скалярное произведение
 ValType TVector<ValType>::operator*(const TVector<ValType> &v)
 {
+	ValType result = 0;
+	if (GetSize() != v.GetSize() || GetStartIndex() != v.GetStartIndex())
+		throw 'DifV';
+	for (int i = StartIndex; i < Size + StartIndex; i++)
+		result= result + (*this)[i] * v[i];
+		return result;
 } /*-------------------------------------------------------------------------*/
 
 
