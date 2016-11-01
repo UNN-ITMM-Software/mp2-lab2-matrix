@@ -174,40 +174,46 @@ TVector<ValType> TVector<ValType>::operator*(const ValType &val)
 template <class ValType> // сложение
 TVector<ValType> TVector<ValType>::operator+(const TVector<ValType> &v)
 {
-	if (GetSize() != v.GetSize() || GetStartIndex() != v.GetStartIndex()) 
-		throw 'DifV';
+	if (GetSize() == v.GetSize())
+	{
 
-	TVector<ValType> result(GetSize(), GetStartIndex());
+		TVector<ValType> result(GetSize(), GetStartIndex());
 
-	for (int i = StartIndex; i < Size + StartIndex; i++) {
-		result[i] = (*this)[i] + v[i];
+		for (int i = StartIndex; i < Size + StartIndex; i++) {
+			result[i] = (*this)[i] + v[i];
+		}
+		return result;
 	}
-	return result;
+	throw 'DifL'
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // вычитание
 TVector<ValType> TVector<ValType>::operator-(const TVector<ValType> &v)
 {
-	if (GetSize() != v.GetSize() || GetStartIndex() != v.GetStartIndex())
-		throw 'DifV';
+	if (GetSize() == v.GetSize()) 
+	{
+		TVector<ValType> result(GetSize(), GetStartIndex());
 
-	TVector<ValType> result(GetSize(), GetStartIndex());
-
-	for (int i = StartIndex; i < Size + StartIndex; i++) {
-		result[i] = (*this)[i] - v[i];
+		for (int i = StartIndex; i < Size + StartIndex; i++) {
+			result[i] = (*this)[i] - v[i];
+		}
+		return result;
 	}
-	return result;
+	throw 'DifL'
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // скалярное произведение
 ValType TVector<ValType>::operator*(const TVector<ValType> &v)
 {
 	ValType result = 0;
-	if (GetSize() != v.GetSize() || GetStartIndex() != v.GetStartIndex())
-		throw 'DifV';
+	if (GetSize() == v.GetSize())
+	{
+	
 	for (int i = StartIndex; i < Size + StartIndex; i++)
-		result= result + (*this)[i] * v[i];
-		return result;
+		result = result + (*this)[i] * v[i];
+	return result;
+	}
+	throw 'DifL'
 } /*-------------------------------------------------------------------------*/
 
 
@@ -301,13 +307,20 @@ TMatrix<ValType>& TMatrix<ValType>::operator=(const TMatrix<ValType> &mt)
 
 template <class ValType> // сложение
 TMatrix<ValType> TMatrix<ValType>::operator+(const TMatrix<ValType> &mt)
+//{
+//	if (GetSize() != mt.GetSize()) throw 'DifM';
+//	TMatrix<ValType> result(Size);
+//	for (int i = 0; i < Size; i++) 
+//	{
+//		result[i] = (*this)[i] - mt[i];
+//	}
+//	return result;
+//} /*-------------------------------------------------------------------------*/
+
 {
-	if (GetSize() != mt.GetSize()) throw 'DifM';
-	TMatrix<ValType> result(Size);
-	for (int i = 0; i < Size; i++) 
-		result[i] = (*this)[i] + mt[i];
-	return result;
-} /*-------------------------------------------------------------------------*/
+	return TVector<TVector<ValType> >::operator+(mt);
+}
+
 
 template <class ValType> // вычитание
 TMatrix<ValType> TMatrix<ValType>::operator-(const TMatrix<ValType> &mt)
