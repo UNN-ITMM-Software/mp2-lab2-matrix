@@ -152,7 +152,12 @@ TVector<ValType> TVector<ValType>::operator-(const ValType &val)
 template <class ValType> // умножить на скаляр
 TVector<ValType> TVector<ValType>::operator*(const ValType &val)
 {
-
+	TVector res(Size, StartIndex);
+	for(int i=0; i<Size; i++)
+	{
+	res.pVector[i]=pVector[i]*val;
+	}
+	return res;
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // сложение
@@ -251,7 +256,10 @@ template <class ValType> // конструктор преобразования 
 TMatrix<ValType>::TMatrix(const TVector<TVector<ValType> > &mt):
   TVector<TVector<ValType> >(mt)
 {
-
+	Size=mt.Size;
+	StartIndex=mt.StartIndex;
+	pVector=mt.pVector;
+	
 }
 
 template <class ValType> // сравнение
