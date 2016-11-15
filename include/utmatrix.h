@@ -28,9 +28,8 @@ class TVector {
     ValType neutralVal;
 
  public:
-    explicit TVector(int s = 10, int si = 0);
-    explicit TVector(const TVector &v);
-    // конструктор копирования
+    TVector(int s = 10, int si = 0);
+    TVector(const TVector &v);  // конструктор копирования
     ~TVector();
     int GetSize()      { return Size;       }  // размер вектора
     int GetStartIndex() { return StartIndex; }
@@ -182,7 +181,7 @@ class TMatrix : public TVector<TVector<ValType> > {
 
  public:
     explicit TMatrix(int s = 10);
-    explicit TMatrix(const TMatrix &mt);  // копирование
+    TMatrix(const TMatrix &mt);  // копирование
     TMatrix(const TVector<TVector<ValType> > &mt);
     // преобразование типа
     bool operator==(const TMatrix &mt) const;  // сравнение
