@@ -43,7 +43,7 @@ TEST(TMatrix, copied_matrix_has_its_own_memory)
 TEST(TMatrix, can_get_size)
 {
 	TMatrix<int> matr(10);
-	ASSERT_ANY_THROW(matr.GetSize());
+	ASSERT_NO_THROW(matr.GetSize());
 }
 
 TEST(TMatrix, can_set_and_get_element)
@@ -55,66 +55,91 @@ TEST(TMatrix, can_set_and_get_element)
 
 TEST(TMatrix, throws_when_set_element_with_negative_index)
 {
-	ADD_FAILURE();
+	TMatrix<int> matr(10);
+	ASSERT_ANY_THROW(matr[-4][5]);
 }
 
 TEST(TMatrix, throws_when_set_element_with_too_large_index)
 {
-	ADD_FAILURE();
+	TMatrix<int> matr(10);
+	ASSERT_ANY_THROW(matr[20][5] = 10);
 }
 
 TEST(TMatrix, can_assign_matrix_to_itself)
 {
-  ADD_FAILURE();
+	TMatrix<int> matr(10);
+	matr[3][6] = 7;
+	ASSERT_NO_THROW(matr = matr);
 }
 
 TEST(TMatrix, can_assign_matrices_of_equal_size)
 {
-  ADD_FAILURE();
+	TMatrix<int> matr(10), assignable(10);
+	matr[4][4] = 12;
+	ASSERT_NO_THROW(assignable = matr);
 }
 
 TEST(TMatrix, assign_operator_change_matrix_size)
 {
-  ADD_FAILURE();
+	TMatrix<int> matr(10), assignable(5);
+	EXPECT_NE(matr.GetSize(), assignable.GetSize());
+	ASSERT_NO_THROW(assignable = matr);
+	EXPECT_EQ(matr.GetSize(), assignable.GetSize());
 }
 
 TEST(TMatrix, can_assign_matrices_of_different_size)
 {
-  ADD_FAILURE();
+	TMatrix<int> matr(10), assignable(5);
+	ASSERT_NO_THROW(assignable = matr);
 }
 
 TEST(TMatrix, compare_equal_matrices_return_true)
 {
-  ADD_FAILURE();
+	TMatrix<int> matr(10),  assignable(5);
+	matr[5][5] = 3829;
+	assignable = matr;
+	EXPECT_TRUE(assignable == matr);
 }
 
 TEST(TMatrix, compare_matrix_with_itself_return_true)
 {
-  ADD_FAILURE();
+	TMatrix<int> matr(10);
+	matr[5][5] = 3829;
+	EXPECT_TRUE(matr == matr);
 }
 
 TEST(TMatrix, matrices_with_different_size_are_not_equal)
 {
-  ADD_FAILURE();
+	TMatrix<int> matr(10),  assignable(5);
+	matr[1][1] = assignable[1][1] = 3829;
+	EXPECT_TRUE(assignable != matr);
 }
 
 TEST(TMatrix, can_add_matrices_with_equal_size)
 {
-  ADD_FAILURE();
+	TMatrix<int> matr(10), sub(10);
+	matr[7][7] = 7;
+	ASSERT_NO_THROW(matr - sub);
 }
 
 TEST(TMatrix, cant_add_matrices_with_not_equal_size)
 {
-  ADD_FAILURE();
+	TMatrix<int> matr(10),  assignable(5);
+	matr[1][1] = assignable[1][1] = 3829;
+	ASSERT_ANY_THROW(assignable + matr);
 }
 
 TEST(TMatrix, can_subtract_matrices_with_equal_size)
 {
-  ADD_FAILURE();
+	TMatrix<int> matr(10), sub(10);
+	matr[7][7] = 7;
+	ASSERT_NO_THROW(matr - sub);
 }
 
 TEST(TMatrix, cant_subtract_matrixes_with_not_equal_size)
 {
-  ADD_FAILURE();
+	TMatrix<int> matr(10),  assignable(5);
+	matr[1][1] = assignable[1][1] = 3829;
+	ASSERT_ANY_THROW(assignable = assignable - matr);
 }
 
