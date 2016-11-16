@@ -9,8 +9,7 @@
 #include "utmatrix.h"
 //---------------------------------------------------------------------------
 
-void main()
-{
+void main() {
   TMatrix<int> a(5), b(5), c(5);
   int i, j;
 
@@ -18,14 +17,23 @@ void main()
   cout << "Тестирование программ поддержки представления треугольных матриц"
     << endl;
   for (i = 0; i < 5; i++)
-    for (j = i; j < 5; j++ )
-    {
-      a[i][j] =  i * 10 + j;
-      b[i][j] = (i * 10 + j) * 100;
+    for (j = i; j < 5; j++) {
+    a[i][j] =  i * 10 + j;
+    b[i][j] = (i * 10 + j) * 100;
     }
   c = a + b;
   cout << "Matrix a = " << endl << a << endl;
   cout << "Matrix b = " << endl << b << endl;
   cout << "Matrix c = a + b" << endl << c << endl;
+
+  for (i = 0; i < 5; i++)
+    for (j = i; j < 5; j++) {
+        a[i][j] = 2*(5 - j);
+        b[i][j] = 5 - j;
+    }
+  c = a - b;
+  cout << "Matrix a = " << endl << a << endl;
+  cout << "Matrix b = " << endl << b << endl;
+  cout << "Matrix c = a - b" << endl << c << endl;
 }
 //---------------------------------------------------------------------------

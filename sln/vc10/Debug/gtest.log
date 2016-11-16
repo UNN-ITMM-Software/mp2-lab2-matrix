@@ -1,0 +1,3 @@
+﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (sample_utmatrix.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  gtest-all.cc
+  gtest.vcxproj -> C:\Users\qq\Kate\Uni\Git\mp2-lab2-matrix-master\sln\vc10\Debug\gtest.lib
