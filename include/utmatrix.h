@@ -27,8 +27,8 @@ public:
   TVector(int s = 10, int si = 0);
   TVector(const TVector &v);                // конструктор копирования
   ~TVector();
-  int GetSize()      { return Size;       } // размер вектора
-  int GetStartIndex(){ return StartIndex; } // индекс первого элемента
+  int GetSize() const      { return Size;       } // размер вектора
+  int GetStartIndex()const{ return StartIndex; } // индекс первого элемента
   ValType& operator[](int pos);             // доступ
   bool operator==(const TVector &v) const;  // сравнение
   bool operator!=(const TVector &v) const;  // сравнение
@@ -68,7 +68,8 @@ TVector<ValType>::TVector(int s, int si)
 	pVector = new ValType[s];
 	Size = s;
 	StartIndex = si;
-	
+	for (int i = StartIndex; i < Size + StartIndex; i++)
+		(*this)[i] = ValType(); //ватизит
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> //конструктор копирования
@@ -77,7 +78,7 @@ TVector<ValType>::TVector(const TVector<ValType> &v)
 	pVector = new ValType[v.Size];
 	Size = v.Size;
 	StartIndex = v.StartIndex;
-	for (int i = 0; i < Size; i++)
+	for (int i = StartIndex; i < Size+StartIndex; i++)
 		pVector[i] = v.pVector[i];
 
 } /*-------------------------------------------------------------------------*/
@@ -106,7 +107,7 @@ ValType& TVector<ValType>::operator[](int pos)
 template <class ValType> // сравнение
 bool TVector<ValType>::operator==(const TVector &v) const
 {
-	if (Size != v.Size) return false;
+	if (Size != v.Size) return false; //GetSize[i]
 	if (StartIndex != v.StartIndex) return false;
 	for (int i = StartIndex; i < Size + StartIndex; i++)
 	{
@@ -136,7 +137,7 @@ TVector<ValType>& TVector<ValType>::operator=(const TVector &v)
 {
 	if (this != &v)
 	{
-		if (Size != v.Size)
+		if (Size != v.Size) //GetSize
 		{
 			Size = v.Size;
 			delete[] pVector;
@@ -177,25 +178,25 @@ TVector<ValType> TVector<ValType>::operator*(const ValType &val)
 template <class ValType> // сложение
 TVector<ValType> TVector<ValType>::operator+(const TVector<ValType> &v)
 {
-	if (GetSize() == v.GetSize() && GetStartIndex() == v.GetStartIndex())
-	{
+	//if (GetSize() == v.GetSize() && GetStartIndex() == v.GetStartIndex())
+	//{
 
-		TVector<ValType> RESULT(GetSize(), GetStartIndex());
+	//	TVector<ValType> RESULT(Size, StartIndex);
 
-		for (int i = StartIndex; i < Size + StartIndex; i++) {
-			RESULT[i] = (*this)[i]+v[i];
-		}
-		return RESULT;
-	}
-	throw 'DifL';
+	//	for (int i = StartIndex; i < Size + StartIndex; i++) {
+	//		RESULT.pVector[i] = (*this)[i]+v[i];
+	//	}
+	//	return RESULT;
+	//}
+	//throw 'DifL';
 
-	/*if (GetSize() != v.GetSize || GetStartIndex() != v.GetStartIndex()) throw 'DifL';
+	if ((v.GetSize() != GetSize())||(GetStartIndex() != v.GetStartIndex())) throw 'DifL';
 	TVector<ValType> RESULT(GetSize(), GetStartIndex());
 
 	for (int i = StartIndex; i < Size + StartIndex; i++) {
-		RESULT[i] = (*this)[i] + v[i];
+		RESULT.pVector[i] = pVector[i] + v.pVector[i];
 	}
-	return RESULT;*/
+	return RESULT;
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // вычитание
@@ -203,7 +204,7 @@ TVector<ValType> TVector<ValType>::operator-(const TVector<ValType> &v)
 {
 	if (GetSize() == v.GetSize() && GetStartIndex() == v.GetStartIndex())
 	{
-		TVector<ValType> RESULT(GetSize(), GetStartIndex());
+		TVector<ValType> RESULT(Size, StartIndex);
 
 		for (int i = StartIndex; i < Size + StartIndex; i++) {
 			RESULT[i] = (*this)[i] - v[i];
@@ -259,14 +260,19 @@ public:
 template <class ValType> //конструктор инициализатор
 TMatrix<ValType>::TMatrix(int s): TVector<TVector<ValType> >(s)
 {
-	if (s < 0) throw 'Neg';
-	if (s > MAX_MATRIX_SIZE) throw 'Big';
-	for (int i = 0; i < s; i++) 
-		pVector[i] = TVector<ValType>(s - i, i);  //втф
-	for (int i = 0; i < s;  i++)
-		for (int j = (*this)[i].GetStartIndex(); j < (*this)[i].GetStartIndex() + (*this)[i].GetSize(); j++)  //(int j = pVector[i].GetStartIndex(); j < pVector[i].GetStartIndex() + p.Vector[i].GetSize(); j++)
-			pVector[i][j] = 0; 
-
+	try {
+		if (s < 0) throw 'Neg';
+		if (s > MAX_MATRIX_SIZE) throw 'Big';
+		for (int i = 0; i < s; i++)
+			pVector[i] = TVector<ValType>(s - i, i);  //втф
+		for (int i = 0; i < s; i++)
+			for (int j = (*this)[i].GetStartIndex(); j < (*this)[i].GetStartIndex() + (*this)[i].GetSize(); j++)  //(int j = pVector[i].GetStartIndex(); j < pVector[i].GetStartIndex() + p.Vector[i].GetSize(); j++)
+				pVector[i][j] = 0;
+	}
+	catch (...)
+	{
+		cout << "Something went wrong in matrix constructor!!!" << endl;
+	}
 
 } /*-------------------------------------------------------------------------*/
 
@@ -318,29 +324,29 @@ TMatrix<ValType>& TMatrix<ValType>::operator=(const TMatrix<ValType> &mt)
 template <class ValType> // сложение
 TMatrix<ValType> TMatrix<ValType>::operator+(const TMatrix<ValType> &mt)
 {
-	if (Size!= mt.Size) 
-		throw 'DifM';
-	TMatrix<ValType> RESULT(Size);
-	for (int i = 0; i < Size; i++)
-	{
-		RESULT[i] = pVector[i] + mt.pVector[i];
-		//RESULT[i] = (*this)[i] + mt[i];
-	}
-	return RESULT;
-	//return TVector<TVector<ValType> >::operator+(mt); спросить как оно работает
+	//if (Size!= mt.Size) 
+	//	throw 'DifM';
+	//TMatrix<ValType> RESULT(Size);
+	//for (int i = 0; i < Size; i++)
+	//{
+	//	RESULT[i] = pVector[i] + mt.pVector[i];
+	//	//RESULT[i] = (*this)[i] + mt[i];
+	//}
+	//return RESULT;
+	return TVector<TVector<ValType> >::operator+(mt); //спросить как оно работает
 } /*-------------------------------------------------------------------------*/
 
 
 template <class ValType> // вычитание
 TMatrix<ValType> TMatrix<ValType>::operator-(const TMatrix<ValType> &mt)
 {
-	if (GetSize() != mt.GetSize()) 
-		throw 'DifM';
-	TMatrix<ValType> result(Size);
-	for (int i = 0; i < Size; i++)
-		result[i] = (*this)[i] - mt[i];
-	return result;
-	//return TVector<TVector<ValType> >::operator-(mt); спросить как оно работает
+	//if (GetSize() != mt.GetSize()) 
+	//	throw 'DifM';
+	//TMatrix<ValType> result(Size);
+	//for (int i = 0; i < Size; i++)
+	//	result[i] = (*this)[i] - mt[i];
+	//return result;
+	return TVector<TVector<ValType> >::operator-(mt); спросить как оно работает
 } /*-------------------------------------------------------------------------*/
 
 // TVector О3 Л2 П4 С6
