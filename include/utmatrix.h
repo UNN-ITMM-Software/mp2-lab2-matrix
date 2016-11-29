@@ -250,7 +250,7 @@ public:
   TMatrix(int s = 10);                           
   TMatrix(const TMatrix &mt);                    // копирование
   TMatrix(const TVector<TVector<ValType> > &mt); // преобразование типа
-  ~TMatrix(); //{ cout << "matr" << endl; }
+  ~TMatrix() {}; //{ cout << "matr" << endl; }
   bool operator==(const TMatrix &mt) const;      // сравнение
   bool operator!=(const TMatrix &mt) const;      // сравнение
   TMatrix& operator= (const TMatrix &mt);        // присваивание
@@ -278,7 +278,7 @@ TMatrix<ValType>::TMatrix(int s): TVector<TVector<ValType> >(s)
 		if (s < 0) throw 'Neg';
 		if (s > MAX_MATRIX_SIZE) throw 'Big';
 		for (int i = 0; i < s; i++)
-			pVector[i] = *(new TVector<ValType>(s - i, i));  //delete????
+			pVector[i] = TVector<ValType>(s - i, i);  //delete????
 
 } /*-------------------------------------------------------------------------*/
 
@@ -292,13 +292,13 @@ TMatrix<ValType>::TMatrix(const TVector<TVector<ValType> > &mt):
 
 
 
-template <class Valtype>
-TMatrix<Valtype>::~TMatrix()
-{
-	for (int i = 0; i < Size; i++)
-		delete pVector[i];
-	delete[]pVector;
-}
+//template <class Valtype>
+//TMatrix<Valtype>::~TMatrix()
+//{
+//	for (int i = 0; i < Size; i++)
+//		delete pVector[i];
+//	delete[]pVector;
+//}
 
 template <class ValType> // сравнение
 bool TMatrix<ValType>::operator==(const TMatrix<ValType> &mt) const
