@@ -125,7 +125,7 @@ TVector<ValType>& TVector<ValType>::operator=(const TVector &v)
 template <class ValType> // прибавить скаляр
 TVector<ValType> TVector<ValType>::operator+(const ValType &val)
 {
-	//с обычными выекторами так делать нельзя!!
+	//с обычными выкторами так делать нельзя!!
 	//НО если вы хотите извращений, то вот вам
 	for( int i = 0; i < Size; ++i )
 		pVector[i] += val;
@@ -136,7 +136,7 @@ TVector<ValType> TVector<ValType>::operator+(const ValType &val)
 template <class ValType> // вычесть скаляр
 TVector<ValType> TVector<ValType>::operator-(const ValType &val)
 {
-	//с обычными выекторами так делать нельзя!!
+	//с обычными выкторами так делать нельзя!!
 	//НО если вы хотите извращений, то вот вам
 	for( int i = 0; i < Size; ++i )
 		pVector[i] -= val;
