@@ -15,6 +15,8 @@ using namespace std;
 const int MAX_VECTOR_SIZE = 100000000;
 const int MAX_MATRIX_SIZE = 10000;
 
+enum { DIFFERENT_SIZES = 0, DIFFERENT_START_INDEXES };
+
 // Шаблон вектора
 template <class ValType>
 class TVector
@@ -62,66 +64,135 @@ public:
 template <class ValType>
 TVector<ValType>::TVector(int s, int si)
 {
+	pVector = new ValType[s];
+	memset( pVector, 0, s );
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> //конструктор копирования
 TVector<ValType>::TVector(const TVector<ValType> &v)
 {
+	Size = v.Size;
+	StartIndex = v.StartIndex;
+	pVector = new ValType[Size];
+	memcpy( pVector, v.pVector, Size );
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType>
 TVector<ValType>::~TVector()
 {
+	delete [] pVector;
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // доступ
 ValType& TVector<ValType>::operator[](int pos)
 {
+	return pVector[StartIndex + pos];
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // сравнение
 bool TVector<ValType>::operator==(const TVector &v) const
 {
+	if( Size != v.Size )
+		return false;
+	if( v.StartIndex != v.StartIndex )
+		return false;
+	for( int i = 0; i < Size - 1; ++i )
+	{
+		if( pVector[i] != v.pVector[i] )
+			return false;
+	}
+	return true;
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // сравнение
 bool TVector<ValType>::operator!=(const TVector &v) const
 {
+	return !( this == v );
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // присваивание
 TVector<ValType>& TVector<ValType>::operator=(const TVector &v)
 {
+	delete [] pVector;
+	Size = v.Size;
+	StartIndex = v.StartIndex;
+	pVector = new ValType[Size];
+	memcpy( pVector, v.pVector, Size );
+
+	return *this;
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // прибавить скаляр
 TVector<ValType> TVector<ValType>::operator+(const ValType &val)
 {
+	//с обычными выекторами так делать нельзя!!
+	//НО если вы хотите извращений, то вот вам
+	for( int i = 0; i < Size; ++i )
+		pVector[i] += val;
+
+	return *this;
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // вычесть скаляр
 TVector<ValType> TVector<ValType>::operator-(const ValType &val)
 {
+	//с обычными выекторами так делать нельзя!!
+	//НО если вы хотите извращений, то вот вам
+	for( int i = 0; i < Size; ++i )
+		pVector[i] -= val;
+
+	return *this;
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // умножить на скаляр
 TVector<ValType> TVector<ValType>::operator*(const ValType &val)
 {
+	for( int i = 0; i < Size; ++i )
+		pVector[i] *= val;
+
+	return *this;
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // сложение
 TVector<ValType> TVector<ValType>::operator+(const TVector<ValType> &v)
 {
+	if( Size != v.Size )
+		throw DIFFERENT_SIZES;
+	if(StartIndex != v.StartIndex )
+		throw DIFFERENT_START_INDEXES;
+
+	for( int i = 0; i < Size; ++i )
+		pVector[i] += v.pVector[i];
+
+	return *this;
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // вычитание
 TVector<ValType> TVector<ValType>::operator-(const TVector<ValType> &v)
 {
+	if( Size != v.Size )
+		throw DIFFERENT_SIZES;
+	if(StartIndex != v.StartIndex )
+		throw DIFFERENT_START_INDEXES;
+
+	for( int i = 0; i < Size; ++i )
+		pVector[i] -= v.pVector[i];
+
+	return *this;
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // скалярное произведение
 ValType TVector<ValType>::operator*(const TVector<ValType> &v)
 {
+	if( Size != v.Size )
+		throw DIFFERENT_SIZES;
+	if(StartIndex != v.StartIndex )
+		throw DIFFERENT_START_INDEXES;
+
+	for( int i = 0; i < Size; ++i )
+		pVector[i] *= v.pVector[i];
+
+	return *this;
 } /*-------------------------------------------------------------------------*/
 
 
