@@ -15,7 +15,7 @@ using namespace std;
 const int MAX_VECTOR_SIZE = 100000000;
 const int MAX_MATRIX_SIZE = 10000;
 
-enum { DIFFERENT_SIZES = 0, DIFFERENT_START_INDEXES };
+enum { DIFFERENT_SIZES = 0, DIFFERENT_START_INDEXES, BAD_SIZE, BAD_START_INDEX };
 
 // Шаблон вектора
 template <class ValType>
@@ -64,8 +64,15 @@ public:
 template <class ValType>
 TVector<ValType>::TVector(int s, int si)
 {
-	pVector = new ValType[s];
-	memset( pVector, 0, s );
+	if( s <= 0 )
+		throw BAD_SIZE;
+	if( si <=0 )
+		throw BAD_START_INDEX;
+
+	Size = s - si;//размер, как я понимаю, у нас тут задается без учета того,что мы не храним нули
+	StartIndex = si;
+	pVector = new ValType[Size];
+	memset( pVector, 0, Size );
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> //конструктор копирования
@@ -125,8 +132,6 @@ TVector<ValType>& TVector<ValType>::operator=(const TVector &v)
 template <class ValType> // прибавить скаляр
 TVector<ValType> TVector<ValType>::operator+(const ValType &val)
 {
-	//с обычными выкторами так делать нельзя!!
-	//НО если вы хотите извращений, то вот вам
 	for( int i = 0; i < Size; ++i )
 		pVector[i] += val;
 
@@ -136,8 +141,6 @@ TVector<ValType> TVector<ValType>::operator+(const ValType &val)
 template <class ValType> // вычесть скаляр
 TVector<ValType> TVector<ValType>::operator-(const ValType &val)
 {
-	//с обычными выкторами так делать нельзя!!
-	//НО если вы хотите извращений, то вот вам
 	for( int i = 0; i < Size; ++i )
 		pVector[i] -= val;
 
@@ -158,7 +161,7 @@ TVector<ValType> TVector<ValType>::operator+(const TVector<ValType> &v)
 {
 	if( Size != v.Size )
 		throw DIFFERENT_SIZES;
-	if(StartIndex != v.StartIndex )
+	if( StartIndex != v.StartIndex )
 		throw DIFFERENT_START_INDEXES;
 
 	for( int i = 0; i < Size; ++i )
@@ -172,7 +175,7 @@ TVector<ValType> TVector<ValType>::operator-(const TVector<ValType> &v)
 {
 	if( Size != v.Size )
 		throw DIFFERENT_SIZES;
-	if(StartIndex != v.StartIndex )
+	if( StartIndex != v.StartIndex )
 		throw DIFFERENT_START_INDEXES;
 
 	for( int i = 0; i < Size; ++i )
