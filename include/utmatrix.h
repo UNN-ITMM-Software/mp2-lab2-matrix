@@ -218,6 +218,8 @@ public:
   TMatrix  operator- (const TMatrix &mt);        // вычитание
   TMatrix  operator* ( TMatrix &mt);        // умножение
 
+  ValType calculate_determinant();//вычисление определителя
+
   // ввод / вывод
   friend istream& operator>>(istream &in, TMatrix &mt)
   {
@@ -231,6 +233,8 @@ public:
       out << mt.pVector[i] << endl;
     return out;
   }
+
+
 };
 
 template <class ValType>
@@ -346,6 +350,18 @@ TMatrix<ValType> TMatrix<ValType>::operator*(TMatrix<ValType> &mt)
 		 }
 	}
 	return tmp;
+}
+
+template <class ValType> // определитель
+ValType TMatrix<ValType>::calculate_determinant()
+{
+	ValType result = -((*this)[Size-1])[0];
+	for ( int i = 1; i < Size; ++i )
+	{
+		result *= ((*this)[Size - i - 1])[i];
+	}
+
+	return result;
 }
 
 // TVector О3 Л2 П4 С6
