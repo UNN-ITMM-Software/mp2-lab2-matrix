@@ -1,4 +1,4 @@
-﻿Построение начато 25.05.2017 21:29:13.
+﻿Построение начато 25.05.2017 21:36:20.
      1>Проект "C:\Users\123\Documents\GitHub\mp2-lab2-matrix\sln\vc10\sample_utmatrix.vcxproj" в узле 2 (целевые объекты build).
      1>InitializeBuildStatus:
          Создание "Debug\sample_utmatrix.unsuccessfulbuild", так как было задано "AlwaysCreate".
@@ -23,4 +23,4 @@
 
 Построение успешно завершено.
 
-Затраченное время: 00:00:00.77
+Затраченное время: 00:00:00.49

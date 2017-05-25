@@ -394,7 +394,6 @@ template <class ValType> // умножение
 	 double a=tmp[k+j][k+j]/tmp[k][k+j];
 	 for (int i = j; i<Size-k ; i++)
 		{
-			//tmp[k][i]=a;
 			tmp[k][i+k]=tmp[k][i+k]-tmp[k+j][i+k]/a;
 			tmp2[k][i+k]=tmp2[k][i+k]-tmp2[k+j][i+k]/a;
 		}
