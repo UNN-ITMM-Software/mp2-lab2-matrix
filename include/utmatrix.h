@@ -233,8 +233,9 @@ public:
 	TMatrix& operator= (const TMatrix &mt); // присваивание 
 	TMatrix operator+ (const TMatrix &mt); // сложение 
 	TMatrix operator- (const TMatrix &mt); // вычитание 
-
-										   // ввод / вывод 
+	TMatrix operator* ( TMatrix &mt);     // умножение 
+	TMatrix operator/ ( TMatrix &mt);     // деление
+	// ввод / вывод 
 	friend istream& operator >> (istream &in, TMatrix &mt)
 	{
 		for (int i = 0; i < mt.Size; i++)
@@ -255,7 +256,7 @@ TMatrix<ValType>::TMatrix(int s) : TVector<TVector<ValType>>(s)
 	if ((s>0)&&(s<MAX_MATRIX_SIZE))
 	{
 	for (int i = 0; i < s ; i++)
-		pVector[i] = TVector<ValType>(s - i, i);
+		pVector[i] = TVector<ValType>(s-i, i);
 	}
 	else throw "Неверно задан размер матрицы";
 }
@@ -310,7 +311,7 @@ TMatrix<ValType>& TMatrix<ValType>::operator=(const TMatrix<ValType> &mt)
 template <class ValType> // сложение 
 TMatrix<ValType> TMatrix<ValType>::operator+(const TMatrix<ValType> &mt)
 {
-} /*-------------------------------------------------------------------------*/
+	return TVector<TVector<ValType>>::operator+(mt);
 }
 
 template <class ValType> // вычитание 
@@ -319,6 +320,99 @@ TMatrix<ValType> TMatrix<ValType>::operator-(const TMatrix<ValType> &mt)
 	return TVector<TVector<ValType>>::operator-(mt);
 }
 
-// TVector О3 Л2 П4 С6 
-// TMatrix О2 Л2 П3 С3 
+template <class ValType> // умножение
+ TMatrix<ValType> TMatrix<ValType>::operator*(TMatrix<ValType> &mt)
+ {
+
+		TMatrix<ValType> tmp( mt.Size );
+	
+
+		for (int l = 0; l<Size; l++ )
+				{
+
+
+		for (int i = 0; i < Size-l; i++ )
+		{
+			 for (int j = i; j < Size-l; j++ )
+			 {
+				tmp[i][j] = 0;
+				int count = i > j ? i : j;
+				
+ 				for( int k = count; k < Size - l; k++ )
+ 				{
+ 					tmp[i][j] = tmp[i][j]  + ((*this)[i])[k] *  mt[k][j];
+ 				}
+				
+			 }
+		}
+
+		}
+	
+
+ 	return tmp;
+ }
+
+
+
+ template <class ValType> // деление
+ TMatrix<ValType> TMatrix<ValType>::operator/(TMatrix<ValType> &mt)
+ {
+
+
+	 
+	 TMatrix<ValType> tmp( mt.Size );
+	 	for (int i = 0; i < Size; i++ )
+		{
+			 for (int j = i; j < Size; j++ )
+			 {
+				 tmp[i][j] = ((*this)[i])[j];
+			 }
+		}
+
+
+
+	 TMatrix<ValType> tmp2( mt.Size );
+	  	for (int i = 0; i < Size; i++ )
+		{
+			 for (int j = i; j < Size; j++ )
+			 {
+				 tmp2[i][j] = 0;
+			 }
+		}
+
+	 for (int i = 0; i < Size; i++ )
+		{
+				 tmp2[i][i] = 1;
+		}
+
+//diag
+ for (int k = 0; k<Size ; k++)
+ {
+
+	 for (int j = 1; j<Size-k ; j++)
+	 {
+	 double a=tmp[k+j][k+j]/tmp[k][k+j];
+	 for (int i = j; i<Size-k ; i++)
+		{
+			//tmp[k][i]=a;
+			tmp[k][i+k]=tmp[k][i+k]-tmp[k+j][i+k]/a;
+			tmp2[k][i+k]=tmp2[k][i+k]-tmp2[k+j][i+k]/a;
+		}
+	 }
+
+ }
+ //norm
+  	for (int i = 0; i < Size; i++ )
+		{
+			 for (int j = i; j < Size; j++ )
+			 {
+				 tmp2[i][j] = tmp2[i][j]/tmp[i][i];
+			 }
+		}
+
+	//return tmp*tmp2; //=E
+
+	 return tmp2*mt;
+ }
+
 #endif
