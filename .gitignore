@@ -29,3 +29,10 @@
 *.exe
 *.out
 *.app
+sln/vc10/Debug/sample_utmatrix.ilk
+*.log
+*.pdb
+*.opensdf
+*.ipch
+*.idb
+*.sdf
