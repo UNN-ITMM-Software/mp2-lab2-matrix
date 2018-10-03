@@ -6,6 +6,10 @@
 *.dep
 *.res
 *.resources
+*.user
+*.sdf
+*.opensdf
+
 
 # Precompiled Headers
 *.gch
