@@ -4,7 +4,7 @@
 //   Переработано для Microsoft Visual Studio 2008 Сысоевым А.В. (21.04.2015)
 //
 // Верхнетреугольная матрица - реализация на основе шаблона вектора
-//Работу над шаблонами выполнил Серобян Нарек студент второго курса ИИТММ-ФИИТ.//
+//Работу над шаблоном выполнил Серобян Нарек студент второго курса ИИТММ-ФИИТ.//
 
 #ifndef __TMATRIX_H__
 #define __TMATRIX_H__
@@ -78,7 +78,7 @@ TVector<ValType>::~TVector()
 template <class ValType> // доступ
 ValType& TVector<ValType>::operator[](int pos)
 {
-	
+
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // сравнение
@@ -132,7 +132,7 @@ template <class ValType>
 class TMatrix : public TVector<TVector<ValType> >
 {
 public:
-  TMatrix(int s = 10);                           
+  TMatrix(int s = 10);
   TMatrix(const TMatrix &mt);                    // копирование
   TMatrix(const TVector<TVector<ValType> > &mt); // преобразование типа
   bool operator==(const TMatrix &mt) const;      // сравнение
@@ -159,6 +159,14 @@ public:
 template <class ValType>
 TMatrix<ValType>::TMatrix(int s): TVector<TVector<ValType> >(s)
 {
+  if (size<1||size>MAX_MATRIX_SIZE)
+  throw size;
+  for (int i=0;i<size;i++)
+  {
+    TVector <ValType>tmp(size-i,i);
+    this->pVector[i]=tmp;
+  }
+
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // конструктор копирования
