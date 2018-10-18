@@ -31,12 +31,20 @@ TEST(TVector, can_create_copied_vector)
 
 TEST(TVector, copied_vector_is_equal_to_source_one)
 {
-  ADD_FAILURE();
+ // ADD_FAILURE();
+	TVector<int>v(1);
+	v[0] = 10;
+	TVector<int>v1(v);
+	ASSERT_TRUE(v == v1);
 }
 
 TEST(TVector, copied_vector_has_its_own_memory)
 {
-  ADD_FAILURE();
+  //ADD_FAILURE();
+	TVector<int>v(1);
+	TVector<int>v1(v);
+	v[0] = 1;
+	EXPECT_EQ(v1[0], 0);
 }
 
 TEST(TVector, can_get_size)
@@ -63,91 +71,188 @@ TEST(TVector, can_set_and_get_element)
 
 TEST(TVector, throws_when_set_element_with_negative_index)
 {
-  ADD_FAILURE();
+ // ADD_FAILURE();
+	TVector<int>v(5);
+	ASSERT_ANY_THROW(v[-1]);
 }
 
 TEST(TVector, throws_when_set_element_with_too_large_index)
 {
-  ADD_FAILURE();
+ // ADD_FAILURE();
+	TVector<int>v(5);
+	ASSERT_ANY_THROW(v[10]);
 }
 
 TEST(TVector, can_assign_vector_to_itself)
 {
-  ADD_FAILURE();
+ // ADD_FAILURE();
+	TVector<int>v(4);
+	ASSERT_TRUE(v == v);
 }
 
 TEST(TVector, can_assign_vectors_of_equal_size)
 {
-  ADD_FAILURE();
+ // ADD_FAILURE();
+	const int Size = 2;
+	TVector<int>v(Size), v1(Size);
+	for (int i = 0; i < Size; i++) {
+		v1[i] = i;
+	}
+	v = v1;
+	ASSERT_TRUE(v == v1);
 }
 
 TEST(TVector, assign_operator_change_vector_size)
 {
-  ADD_FAILURE();
+ // ADD_FAILURE();
+	const int Size1 = 2, Size2 = 5;
+	TVector<int>v(Size1), v1(Size2);
+	for (int i = 0; i < Size1; i++) {
+		v[i] = i;
+	}
+	v1 = v;
+	ASSERT_TRUE(v == v1);
 }
 
 TEST(TVector, can_assign_vectors_of_different_size)
 {
-  ADD_FAILURE();
+ // ADD_FAILURE();
+	const int Size1 = 5, Size2 = 7;
+	TVector<int>v(Size1), v1(Size2);
+	for (int i = 0; i < Size1; i++) {
+		v[i] = i;
+	}
+	v1 = v;
+	EXPECT_EQ(5, v1.GetSize());
 }
 
 TEST(TVector, compare_equal_vectors_return_true)
 {
-  ADD_FAILURE();
+ // ADD_FAILURE();
+	TVector<int>v1(4);
+	TVector<int>v2(4);
+	for (int i = 0; i < 4; i++) {
+		v1[i] = 1;
+		v2[i] = 1;
+	}
+	ASSERT_TRUE(v1 == v2);
 }
 
 TEST(TVector, compare_vector_with_itself_return_true)
 {
-  ADD_FAILURE();
+ // ADD_FAILURE();
+	int Size = 6;
+	TVector<int>v(Size);
+	for (int i = 0; i < Size; i++) {
+		v[i] = i;
+	}
+	ASSERT_TRUE(v == v);
 }
 
 TEST(TVector, vectors_with_different_size_are_not_equal)
 {
-  ADD_FAILURE();
+  //ADD_FAILURE();
+	int Size1 = 6, Size2 = 10;
+	TVector<int>v1(Size1), v2(Size2);
+	ASSERT_FALSE(v1 == v2);
 }
 
 TEST(TVector, can_add_scalar_to_vector)
 {
-  ADD_FAILURE();
+ // ADD_FAILURE();
+	TVector<int>v(3);
+	v = v + 5;
+	ASSERT_TRUE(v[0], 5);
 }
 
 TEST(TVector, can_subtract_scalar_from_vector)
 {
-  ADD_FAILURE();
+ // ADD_FAILURE();
+	int Size = 3;
+	TVector<int>v(Size);
+	for (int i = 0; i < Size; i++) {
+		v[i] = 7;
+	}
+	v = v - 5;
+	ASSERT_TRUE(v[0], 2);
 }
 
 TEST(TVector, can_multiply_scalar_by_vector)
 {
-  ADD_FAILURE();
+  //ADD_FAILURE();
+	int Size = 3;
+	TVector<int>v(Size);
+	for (int i = 0; i < Size; i++) {
+		v[i] = 2;
+	}
+	v = v * 3;
+	ASSERT_TRUE(v[0], 6);
 }
 
 TEST(TVector, can_add_vectors_with_equal_size)
 {
-  ADD_FAILURE();
+  //ADD_FAILURE();
+	int Size = 3;
+	TVector<int>v1(Size), v2(Size);
+	for (int i = 0; i < Size; i++) {
+		v1[i] = 2;
+		v2[i] = 1;
+	}
+	v1 = v1 + v2;
+	ASSERT_TRUE(v1[0], 3);
 }
 
 TEST(TVector, cant_add_vectors_with_not_equal_size)
 {
-  ADD_FAILURE();
+  //ADD_FAILURE();
+	int Size1 = 3, Size2 = 5;
+	TVector<int>v1(Size1), v2(Size2);
+	for (int i = 0; i < Size1; i++) {
+		v1[i] = 2;
+	}
+
+	ASSERT_ANY_THROW(v1 + v2);
 }
 
 TEST(TVector, can_subtract_vectors_with_equal_size)
 {
-  ADD_FAILURE();
+ // ADD_FAILURE();
+	int Size = 3;
+	TVector<int>v1(Size), v2(Size);
+	for (int i = 0; i < Size; i++) {
+		v1[i] = 3;
+		v2[i] = 1;
+	}
+	v1 = v1 - v2;
+	ASSERT_TRUE(v1[0], 2);
 }
 
 TEST(TVector, cant_subtract_vectors_with_not_equal_size)
 {
-  ADD_FAILURE();
+  //ADD_FAILURE();
+	int Size1 = 5, Size2 = 3;
+	TVector<int>v1(Size1), v2(Size2);
+	ASSERT_ANY_THROW(v1 - v2);
 }
 
 TEST(TVector, can_multiply_vectors_with_equal_size)
 {
-  ADD_FAILURE();
+ // ADD_FAILURE();
+	int Size = 3;
+	TVector<int>v1(Size), v2(Size);
+	for (int i = 0; i < Size; i++) {
+		v1[i] = 3;
+		v2[i] = 1;
+	}
+	
+	ASSERT_TRUE(v1 * v2, 3);
 }
 
 TEST(TVector, cant_multiply_vectors_with_not_equal_size)
 {
-  ADD_FAILURE();
+  //ADD_FAILURE();
+	int Size1 = 5, Size2 = 3;
+	TVector<int>v1(Size1), v2(Size2);
+	ASSERT_ANY_THROW(v1 * v2);
 }
 
