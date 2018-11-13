@@ -3,7 +3,7 @@
 // utmatrix.h - Copyright (c) Гергель В.П. 07.05.2001
 //   Переработано для Microsoft Visual Studio 2008 Сысоевым А.В. (21.04.2015)
 //
-// Верхнетреугольная матрица - реализация на основе шаблона вектора/
+// Верхнетреугольная матрица - реализация на основе шаблона вектора
 
 #ifndef __TMATRIX_H__
 #define __TMATRIX_H__
@@ -90,9 +90,10 @@ TVector<ValType>::~TVector()
 template <class ValType> // доступ
 ValType& TVector<ValType>::operator[](int pos)
 {
-	if (pos - StartIndex >= 0)
+	if ((pos - StartIndex<Size) && (pos - StartIndex>-1))
 		return pVector[pos - StartIndex];
-	else throw "pos and StartIndex";
+	else
+		throw(pos);
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // сравнение
@@ -163,25 +164,25 @@ TVector<ValType> TVector<ValType>::operator*(const ValType &val)
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // сложение
-TVector<ValType> TVector<ValType>::operator+(const TVector<ValType> &v)
+TVector<ValType> TVector<ValType>::operator+(const TVector <ValType> &v)
 {
+	TVector<ValType> res(*this);
 	if (Size != v.Size)
-		throw ("size-1");
-	TVector<ValType> x(Size);
+		throw v.Size;
 	for (int i = 0; i<Size; i++)
-		x.pVector[i] = pVector[i] + v.pVector[i];
-	return x;
+		res.pVector[i] = this->pVector[i] + v.pVector[i];
+	return res;
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // вычитание
 TVector<ValType> TVector<ValType>::operator-(const TVector<ValType> &v)
 {
+	TVector<ValType> c(*this);
 	if (Size != v.Size)
-		throw ("Size-1");
-	TVector<ValType> x(v.Size);
-	for (int i = 0; i<Size; i++)
-		x.pVector[i] = pVector[i] - v.pVector[i];
-	return x;
+		throw v.Size;
+	for (int i = 0; i < Size; i++)
+		c.pVector[i] = pVector[i] - v.pVector[i];
+	return c;
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // скалярное произведение
@@ -231,8 +232,9 @@ public:
 template <class ValType>
 TMatrix<ValType>::TMatrix(int s) : TVector<TVector<ValType> >(s)
 {
-	if ((s<=0) || (s>MAX_MATRIX_SIZE))
-		throw exception("very big size");
+	if ((s<1) || (s>MAX_MATRIX_SIZE))
+		throw s;
+	Size = s;
 	for (int i = 0; i < s; i++)
 		pVector[i] = TVector<ValType>(s, i);
 } /*-------------------------------------------------------------------------*/
@@ -292,21 +294,23 @@ TMatrix<ValType>& TMatrix<ValType>::operator=(const TMatrix<ValType> &mt)
 template <class ValType> // сложение
 TMatrix<ValType> TMatrix<ValType>::operator+(const TMatrix<ValType> &mt)
 {
-	if (Size != mt.Size) throw exception("size");
-	TMatrix<ValType> x(*this);
-	for (int i = 0; i < Size; i++)
-		x.pVector[i] = x.pVector[i] + mt.pVector[i];
-	return x;
+	if (Size != mt.Size || StartIndex != mt.StartIndex)
+		throw mt.Size;
+	TMatrix<ValType> res(Size);
+	for (int i = 0; i<Size; i++)
+		res.pVector[i] = pVector[i] + mt.pVector[i];
+	return res;
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // вычитание
 TMatrix<ValType> TMatrix<ValType>::operator-(const TMatrix<ValType> &mt)
 {
-	if (Size != mt.Size) throw exception("size");
-	TMatrix<ValType> x(*this);
-	for (int i = 0; i < Size; i++)
-		x.pVector[i] = x.pVector[i] - mt.pVector[i];
-	return x;
+	if (Size != mt.Size || StartIndex != mt.StartIndex)
+		throw mt.Size;
+	TMatrix<ValType> res(Size);
+	for (int i = 0; i<Size; i++)
+		res.pVector[i] = pVector[i] - mt.pVector[i];
+	return res;
 } /*-------------------------------------------------------------------------*/
 
 // TVector О3 Л2 П4 С6
