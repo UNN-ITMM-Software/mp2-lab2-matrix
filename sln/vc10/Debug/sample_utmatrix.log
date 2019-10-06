@@ -1,0 +1,5 @@
+﻿D:\Program Files (x86)\Microsoft Visual Studio\2019\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(452,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (gtest.vcxproj, test_utmatrix.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  cl: командная строка warning D9035: использование параметра "Gm" нежелательно, он будет удален в следующих выпусках
+  sample_matrix.cpp
+sample_matrix.obj : warning LNK4075: не учитывается "/EDITANDCONTINUE" из-за спецификации "/SAFESEH"
+  sample_utmatrix.vcxproj -> C:\Users\irach\Desktop\Git\mp2-lab2-matrix\sln\vc10\Debug\sample_utmatrix.exe
