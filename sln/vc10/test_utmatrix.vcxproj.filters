@@ -24,5 +24,6 @@
     <ClInclude Include="..\..\include\utmatrix.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\gtest\gtest.h" />
   </ItemGroup>
 </Project>
