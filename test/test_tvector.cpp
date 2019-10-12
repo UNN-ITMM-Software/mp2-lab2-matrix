@@ -33,11 +33,11 @@ TEST(TVector, copied_vector_is_equal_to_source_one)
 {
 	TVector<int> a(3);
 	a[0] = 0;
-	a[1] = 1;
+	a[1] = 7;
 	a[2] = -23;
 	TVector<int> b(a);
 	EXPECT_EQ(0, b[0]);
-	EXPECT_EQ(1, b[1]);
+	EXPECT_EQ(7, b[1]);
 	EXPECT_EQ(-23, b[2]);
 }
 

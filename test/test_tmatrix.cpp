@@ -48,8 +48,8 @@ TEST(TMatrix, can_set_and_get_element)
 {
 	TMatrix<int> m(2);
 	EXPECT_NO_THROW(m[0][0] = 0);
-	m[1][1] = 7;
-	EXPECT_EQ(7, m[1][1]);
+	m[1][1] = 1;
+	EXPECT_EQ(1, m[1][1]);
 }
 
 TEST(TMatrix, throws_when_set_element_with_negative_index)

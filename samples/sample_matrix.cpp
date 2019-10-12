@@ -58,9 +58,9 @@ void main()
 	}
 
 	if (m1 == m2)
-		cout << "Матрицы m1 и m2 равны " << endl << endl;
+		cout << "Матрицы m1 и m2 равны." << endl << endl;
 	else
-		cout << "Матрицы m1 и m2 не равны " << endl << endl;
+		cout << "Матрицы m1 и m2 не равны." << endl << endl;
 
 	s = m1 + m2;
 	cout << "m1 + m2 = " << endl << s << endl;
