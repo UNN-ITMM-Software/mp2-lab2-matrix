@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include "utmatrix.h"
+#include <stdlib.h>
 //---------------------------------------------------------------------------
 
 void main()
