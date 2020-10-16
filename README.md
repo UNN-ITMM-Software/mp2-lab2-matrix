@@ -79,5 +79,5 @@
 
 [git]:         https://git-scm.com/book/ru/v2
 [gtest]:       https://github.com/google/googletest
-[travis]:      https://travis-ci.org/UNN-VMK-Software/mp2-lab1-set
+[travis]:      https://travis-ci.org/UNN-VMK-Software/mp2-lab2-matrix
 
