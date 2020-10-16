@@ -1,6 +1,6 @@
 # Методы программирования 2: Верхнетреугольные матрицы на шаблонах
 
-[![Build Status](https://travis-ci.org/DimaNubo/mp2-lab2-matrix.svg?branch=master)](https://travis-ci.org/DimaNubo/mp2-lab2-matrix)
+[![Build Status](https://travis-ci.org/UNN-ITMM-Software/mp2-lab2-matrix.svg)][travis]
 <!-- TODO
   -
 -->
