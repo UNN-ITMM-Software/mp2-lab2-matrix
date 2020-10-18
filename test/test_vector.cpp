@@ -2,7 +2,6 @@
 #include "MyVector.h"
 
 
-
 TEST(TVector, can_create_vector_with_positive_length)
 {
 	ASSERT_NO_THROW(TVector<int> v(5));

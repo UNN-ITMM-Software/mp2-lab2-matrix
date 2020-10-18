@@ -1,31 +1,31 @@
-#pragma once
+﻿#pragma once
 
 #include "MyVector.h"
 
 const int MAX_MATRIX_SIZE = 10000;
 
-// Âåðõíåòðåóãîëüíàÿ ìàòðèöà
+
 template <class ValType>
 class TMatrix : public TVector<TVector<ValType> >
 {
 public:
 	TMatrix(int s = 10);
-	TMatrix(const TMatrix &mt);                    // êîïèðîâàíèå
-	TMatrix(const TVector<TVector<ValType> > &mt); // ïðåîáðàçîâàíèå òèïà
-	bool operator==(const TMatrix &mt) const;      // ñðàâíåíèå
-	bool operator!=(const TMatrix &mt) const;      // ñðàâíåíèå
-	TMatrix& operator= (const TMatrix &mt);        // ïðèñâàèâàíèå
-	TMatrix  operator+ (const TMatrix &mt);        // ñëîæåíèå
-	TMatrix  operator- (const TMatrix &mt);        // âû÷èòàíèå
+	TMatrix(const TMatrix& mt);                    
+	TMatrix(const TVector<TVector<ValType> >& mt); 
+	bool operator==(const TMatrix& mt) const;      
+	bool operator!=(const TMatrix& mt) const;      
+	TMatrix& operator= (const TMatrix& mt);        
+	TMatrix  operator+ (const TMatrix& mt);        
+	TMatrix  operator- (const TMatrix& mt);       
 
-												   // ââîä / âûâîä
-	friend istream& operator >> (istream &in, TMatrix &mt)
+												  
+	friend istream& operator >> (istream& in, TMatrix& mt)
 	{
 		for (int i = 0; i < mt.Size; i++)
 			in >> mt.pVector[i];
 		return in;
 	}
-	friend ostream & operator<<(ostream &out, const TMatrix &mt)
+	friend ostream& operator<<(ostream& out, const TMatrix& mt)
 	{
 		for (int i = 0; i < mt.Size; i++)
 			out << mt.pVector[i] << endl;
@@ -36,7 +36,7 @@ public:
 template <class ValType>
 TMatrix<ValType>::TMatrix(int s) : TVector<TVector<ValType> >(s)
 {
-	if ((s<0) || (s > MAX_MATRIX_SIZE)) throw logic_error("incorrect parametr");
+	if ((s < 0) || (s > MAX_MATRIX_SIZE)) throw logic_error("incorrect parametr");
 	for (int i = 0; i < s; i++)
 	{
 		TVector<ValType>Res(i + 1);
@@ -44,8 +44,8 @@ TMatrix<ValType>::TMatrix(int s) : TVector<TVector<ValType> >(s)
 	}
 }
 
-template <class ValType> // êîíñòðóêòîð êîïèðîâàíèÿ
-TMatrix<ValType>::TMatrix(const TMatrix<ValType> &mt) :TVector<TVector<ValType> >(mt)
+template <class ValType> 
+TMatrix<ValType>::TMatrix(const TMatrix<ValType>& mt) :TVector<TVector<ValType> >(mt)
 {
 	for (int i = 0; i < (*this).GetSize(); i++)
 	{
@@ -56,8 +56,8 @@ TMatrix<ValType>::TMatrix(const TMatrix<ValType> &mt) :TVector<TVector<ValType> 
 	StartIndex = mt.GetStartIndex();
 }
 
-template <class ValType> // êîíñòðóêòîð ïðåîáðàçîâàíèÿ òèïà
-TMatrix<ValType>::TMatrix(const TVector<TVector<ValType> > &mt) :TVector<TVector<ValType> >(mt)
+template <class ValType> 
+TMatrix<ValType>::TMatrix(const TVector<TVector<ValType> >& mt) :TVector<TVector<ValType> >(mt)
 {
 	for (int i = (*this).GetStartIndex(); i < (*this).GetSize(); i++)
 	{
@@ -68,8 +68,8 @@ TMatrix<ValType>::TMatrix(const TVector<TVector<ValType> > &mt) :TVector<TVector
 	StartIndex = mt.GetStartIndex();
 }
 
-template <class ValType> // ñðàâíåíèå
-bool TMatrix<ValType>::operator==(const TMatrix<ValType> &mt) const
+template <class ValType> 
+bool TMatrix<ValType>::operator==(const TMatrix<ValType>& mt) const
 {
 	if (((*this).GetStartIndex() == mt.GetStartIndex()) && ((*this).GetSize() == mt.GetSize()))
 	{
@@ -85,14 +85,14 @@ bool TMatrix<ValType>::operator==(const TMatrix<ValType> &mt) const
 	return false;
 }
 
-template <class ValType> // ñðàâíåíèå
-bool TMatrix<ValType>::operator!=(const TMatrix<ValType> &mt) const
+template <class ValType> 
+bool TMatrix<ValType>::operator!=(const TMatrix<ValType>& mt) const
 {
 	return !((*this) == mt);
 }
 
-template <class ValType> // ïðèñâàèâàíèå
-TMatrix<ValType>& TMatrix<ValType>::operator=(const TMatrix<ValType> &mt)
+template <class ValType> 
+TMatrix<ValType>& TMatrix<ValType>::operator=(const TMatrix<ValType>& mt)
 {
 	if (&mt == this)
 	{
@@ -112,8 +112,8 @@ TMatrix<ValType>& TMatrix<ValType>::operator=(const TMatrix<ValType> &mt)
 
 }
 
-template <class ValType> // ñëîæåíèå
-TMatrix<ValType> TMatrix<ValType>::operator+(const TMatrix<ValType> &mt)
+template <class ValType> 
+TMatrix<ValType> TMatrix<ValType>::operator+(const TMatrix<ValType>& mt)
 {
 	if (mt.GetSize() != (*this).GetSize()) throw logic_error("incorrect size");
 	TMatrix<ValType>Res(*this);
@@ -125,8 +125,8 @@ TMatrix<ValType> TMatrix<ValType>::operator+(const TMatrix<ValType> &mt)
 
 }
 
-template <class ValType> // âû÷èòàíèå
-TMatrix<ValType> TMatrix<ValType>::operator-(const TMatrix<ValType> &mt)
+template <class ValType> 
+TMatrix<ValType> TMatrix<ValType>::operator-(const TMatrix<ValType>& mt)
 {
 	if (mt.GetSize() != (*this).GetSize()) throw logic_error("incorrect size");
 	TMatrix<ValType>Res(*this);
@@ -136,4 +136,5 @@ TMatrix<ValType> TMatrix<ValType>::operator-(const TMatrix<ValType> &mt)
 	}
 	return Res;
 }
+
 

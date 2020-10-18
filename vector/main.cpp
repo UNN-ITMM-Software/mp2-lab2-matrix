@@ -1,5 +1,4 @@
-// Òåñòèðîâàíèå âåðõíåòðåóãîëüíîé ìàòðèöû
-
+﻿
 #include <iostream>
 #include "MyMatrix.h"
 
@@ -9,9 +8,6 @@ int main()
 	TMatrix<int> a(5), b(5), c(5);
 	int i, j;
 
-	setlocale(LC_ALL, "Russian");
-	cout << "Òåñòèðîâàíèå ïðîãðàìì ïîääåðæêè ïðåäñòàâëåíèÿ òðåóãîëüíûõ ìàòðèö"
-		<< endl;
 	for (i = 0; i < 5; i++)
 		for (j = i; j < (i + 1); j++)
 		{
@@ -25,3 +21,4 @@ int main()
 
 	return 0;
 }
+
