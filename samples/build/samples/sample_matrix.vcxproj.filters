@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\solda\Desktop\KAKNIBUD\mp2-lab2-matrix\samples\sample_matrix.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\solda\Desktop\KAKNIBUD\mp2-lab2-matrix\samples\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{9D85A361-07F5-3839-A481-B89DA9689E6B}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
