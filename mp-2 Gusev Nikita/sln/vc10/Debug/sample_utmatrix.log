@@ -1,4 +1,0 @@
-﻿cl : командная строка warning D9035: использование параметра "Gm" нежелательно, он будет удален в следующих выпусках
-  sample_matrix.cpp
-sample_matrix.obj : warning LNK4075: не учитывается "/EDITANDCONTINUE" из-за спецификации "/SAFESEH"
-  sample_utmatrix.vcxproj -> C:\Users\user\Desktop\mp2-lab2-matrix-master\sln\vc10\Debug\sample_utmatrix.exe
