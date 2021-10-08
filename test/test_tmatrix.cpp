@@ -27,6 +27,7 @@ TEST(TMatrix, can_create_copied_matrix)
 TEST(TMatrix, copied_matrix_is_equal_to_source_one)
 {
   TMatrix<int> m1(5);
+  m1[0][1] = 4;
   TMatrix<int> m2(m1);
 
   EXPECT_EQ(m1,m2); 
