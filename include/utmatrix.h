@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <utility>
+#include <string>
 
 using namespace std;
     
@@ -67,6 +68,8 @@ TVector<ValType>::TVector(int s, int si) : Size(s), StartIndex(si)
     if((s < 0) || (s > MAX_VECTOR_SIZE) || (si < 0))
       throw string("Wrong arguments");
     pVector = new ValType[s];
+    for(int i = 0; i < s; i++)
+      pVector[i] = 0;
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> //конструктор копирования
@@ -89,7 +92,7 @@ template <class ValType> // доступ
 ValType& TVector<ValType>::operator[](int pos)
 {
     pos -= StartIndex;
-    if((pos < 0) || (pos > Size))
+    if((pos < 0) || (pos >= Size))
       throw string("Wrong argument");
     return pVector[pos];
 
@@ -259,13 +262,12 @@ bool TMatrix<ValType>::operator!=(const TMatrix<ValType> &mt) const
 template <class ValType> // присваивание
 TMatrix<ValType>& TMatrix<ValType>::operator=(const TMatrix<ValType> &mt)
 {
-  if(this->Size != mt.Size)
-    throw string("Different size of TMatrix");
   if(this == &mt)
     return *this;
-  this->Size = mt.Size;
+  TVector<ValType> *tmp = new TVector<ValType>[mt.Size];
   delete [] this->pVector;
-  this->pVector = new TVector<ValType>[this->Size];
+  this->pVector = tmp;
+  this->Size = mt.Size;
   for(int i = 0; i < this->Size; i++){
     this->pVector[i] = mt.pVector[i]; 
   }
