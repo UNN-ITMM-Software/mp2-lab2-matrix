@@ -126,9 +126,9 @@ TVector<ValType>& TVector<ValType>::operator=(const TVector &v)
 {
     if(this == &v)
       return *this;
-    ValType *tmppVector = new ValType [v.Size];
+    ValType *tmp = new ValType [v.Size];
     delete [] pVector;
-    pVector = tmppVector;
+    pVector = tmp;
     Size = v.Size;
     StartIndex = v.StartIndex;
     for(int i = 0; i < Size; i++)
@@ -234,8 +234,7 @@ TMatrix<ValType>::TMatrix(int s): TVector<TVector<ValType>>(s)
   if((s < 0) || (s > MAX_MATRIX_SIZE ))
       throw string("Wrong argument");
   for(int i = 0; i < s; i++) {
-      TVector<ValType> tmp(s-i,i);
-      this->pVector[i] = tmp;
+      this->pVector = new TVector<ValType> (s-i,i);
   }
 } /*-------------------------------------------------------------------------*/
 
