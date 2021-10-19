@@ -59,6 +59,7 @@ public:
   }
 };
 
+
 template <class ValType>
 TVector<ValType>::TVector(int s, int si)
 {
