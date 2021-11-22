@@ -15,17 +15,41 @@ void main()
   int i, j;
 
   setlocale(LC_ALL, "Russian");
-  cout << "Тестирование программ поддержки представления треугольных матриц"
-    << endl;
-  for (i = 0; i < 5; i++)
-    for (j = i; j < 5; j++ )
-    {
-      a[i][j] =  i * 10 + j;
-      b[i][j] = (i * 10 + j) * 100;
-    }
-  c = a + b;
-  cout << "Matrix a = " << endl << a << endl;
-  cout << "Matrix b = " << endl << b << endl;
-  cout << "Matrix c = a + b" << endl << c << endl;
+  cout << "Тестирование программ поддержки представления треугольных матриц" << endl;
+  cout << "Введите размер матриц:" << endl;
+  int n;
+  cin >> n;
+  TMatrix <int> A(n), B(n);
+  cout << "Введитее матрицу А:" << endl;
+  cin >> A;
+  cout << endl;
+  cout << "Введите матрицу B:" << endl;
+  cin >> B;
+  cout << endl;
+  cout << "1.Сложение матриц" << endl;
+  cout << "2.Вычитание матрицы B из матрицы A (A-B)" << endl;
+  cout << "3.Вычитание матрицы A из матрицы B (B-A)" << endl;
+  int k;
+  cout << endl;
+  cin >> k;
+  cout << endl;
+  switch (k)
+  {
+  case 1:
+  {
+	  cout << "A+B=" << endl << endl << A + B << endl;
+	  break;
+  }
+  case 2:
+  {
+	  cout << "A-B=" << endl << endl << A - B << endl;
+	  break;
+  }
+  case 3:
+  {
+	  cout << "B-A=" << endl << endl << B - A << endl;
+	  break;
+  }
+  }
 }
 //---------------------------------------------------------------------------
