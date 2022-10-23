@@ -179,3 +179,5 @@ TEST(TDynamicMatrix, cant_multiply_vectors_with_not_equal_size)
   ASSERT_ANY_THROW(m2 * m1);
 }
 
+
+
