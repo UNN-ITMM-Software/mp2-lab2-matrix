@@ -1,9 +1,9 @@
-// ННГУ, ВМК, Курс "Методы программирования-2", С++, ООП
+// РќРќР“РЈ, Р’РњРљ, РљСѓСЂСЃ "РњРµС‚РѕРґС‹ РїСЂРѕРіСЂР°РјРјРёСЂРѕРІР°РЅРёСЏ-2", РЎ++, РћРћРџ
 //
-// sample_matrix.cpp - Copyright (c) Гергель В.П. 07.05.2001
-//   Переработано для Microsoft Visual Studio 2008 Сысоевым А.В. (20.04.2015)
+// sample_matrix.cpp - Copyright (c) Р“РµСЂРіРµР»СЊ Р’.Рџ. 07.05.2001
+//   РџРµСЂРµСЂР°Р±РѕС‚Р°РЅРѕ РґР»СЏ Microsoft Visual Studio 2008 РЎС‹СЃРѕРµРІС‹Рј Рђ.Р’. (20.04.2015)
 //
-// Тестирование верхнетреугольной матрицы
+// РўРµСЃС‚РёСЂРѕРІР°РЅРёРµ РІРµСЂС…РЅРµС‚СЂРµСѓРіРѕР»СЊРЅРѕР№ РјР°С‚СЂРёС†С‹
 
 #include <iostream>
 #include "utmatrix.h"
@@ -11,21 +11,29 @@
 
 void main()
 {
-  TMatrix<int> a(5), b(5), c(5);
-  int i, j;
-
   setlocale(LC_ALL, "Russian");
-  cout << "Тестирование программ поддержки представления треугольных матриц"
-    << endl;
-  for (i = 0; i < 5; i++)
-    for (j = i; j < 5; j++ )
-    {
-      a[i][j] =  i * 10 + j;
-      b[i][j] = (i * 10 + j) * 100;
-    }
-  c = a + b;
-  cout << "Matrix a = " << endl << a << endl;
-  cout << "Matrix b = " << endl << b << endl;
-  cout << "Matrix c = a + b" << endl << c << endl;
+  cout << "РўРµСЃС‚РёСЂРѕРІР°РЅРёРµ РїСЂРѕРіСЂР°РјРј РїРѕРґРґРµСЂР¶РєРё РїСЂРµРґСЃС‚Р°РІР»РµРЅРёСЏ С‚СЂРµСѓРіРѕР»СЊРЅС‹С… РјР°С‚СЂРёС†" << endl;
+  
+  int size;
+  cout << "Enter size of matrices: ";
+  cin >> size;
+
+  TMatrix<int> A(size), B(size);
+  cout << "Enter elements of matrix A (row by row):" << endl;
+  for (int i = 0; i < size; i++)
+	  for (int j = i; j < size; ++j)
+	  {
+		  cin >> A[i][j];
+	  }
+
+  cout << endl << "Enter elements of matrix B (row by row):" << endl;
+  for (int i = 0; i < size; i++)
+	  for (int j = i; j < size; ++j)
+	  {
+		  cin >> B[i][j];
+	  }
+
+  cout << "A+B:" << endl << A+B << endl;
+  cout << "A-B:" << endl << A-B << endl;
 }
 //---------------------------------------------------------------------------
