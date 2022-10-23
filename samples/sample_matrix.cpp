@@ -5,26 +5,34 @@
 // Тестирование матриц
 
 #include <iostream>
-#include "tmatrix.h"
+#include "utmatrix.h"
 //---------------------------------------------------------------------------
 
 void main()
 {
-  TDynamicMatrix<int> a(5), b(5), c(5);
-  int i, j;
-
   setlocale(LC_ALL, "Russian");
-  cout << "Тестирование класс работы с матрицами"
-    << endl;
-  for (i = 0; i < 5; i++)
-    for (j = i; j < 5; j++ )
-    {
-      a[i][j] =  i * 10 + j;
-      b[i][j] = (i * 10 + j) * 100;
-    }
-  c = a + b;
-  cout << "Matrix a = " << endl << a << endl;
-  cout << "Matrix b = " << endl << b << endl;
-  cout << "Matrix c = a + b" << endl << c << endl;
+  cout << "Тестирование программ поддержки представления треугольных матриц" << endl;
+  
+  int size;
+  cout << "Enter size of matrices: ";
+  cin >> size;
+
+  TMatrix<int> A(size), B(size);
+  cout << "Enter elements of matrix A (row by row):" << endl;
+  for (int i = 0; i < size; i++)
+	  for (int j = i; j < size; ++j)
+	  {
+		  cin >> A[i][j];
+	  }
+
+  cout << endl << "Enter elements of matrix B (row by row):" << endl;
+  for (int i = 0; i < size; i++)
+	  for (int j = i; j < size; ++j)
+	  {
+		  cin >> B[i][j];
+	  }
+
+  cout << "A+B:" << endl << A+B << endl;
+  cout << "A-B:" << endl << A-B << endl;
 }
 //---------------------------------------------------------------------------
