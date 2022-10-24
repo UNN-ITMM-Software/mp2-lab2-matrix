@@ -80,10 +80,10 @@ public:
   TDynamicVector operator+(T val)
   {
   }
-  TDynamicVector operator-(double val)
+  TDynamicVector operator-(T val)
   {
   }
-  TDynamicVector operator*(double val)
+  TDynamicVector operator*(T val)
   {
   }
 
@@ -142,7 +142,7 @@ public:
   }
 
   // матрично-скалярные операции
-  TDynamicVector<T> operator*(const T& val)
+  TDynamicMatrix operator*(const T& val)
   {
   }
 
