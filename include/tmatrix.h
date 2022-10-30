@@ -27,7 +27,10 @@ public:
   {
     if (sz == 0)
       throw out_of_range("Vector size should be greater than zero");
+    if (sz > MAX_VECTOR_SIZE)
+            throw(-1);
     pMem = new T[sz]();// {}; // У типа T д.б. констуктор по умолчанию
+    memset(pMem, 0, sz * sizeof(T));
   }
   TDynamicVector(T* arr, size_t s) : sz(s)
   {
@@ -37,18 +40,31 @@ public:
   }
   TDynamicVector(const TDynamicVector& v)
   {
+     sz = v.sz;
+     pMem = new T[sz];
+     std::copy(v.pMem, v.pMem + sz, pMem);
   }
   TDynamicVector(TDynamicVector&& v) noexcept
   {
+     pMem = nullptr;
+     swap(*this, v);
   }
   ~TDynamicVector()
   {
+    delete[] pMem;
   }
   TDynamicVector& operator=(const TDynamicVector& v)
   {
+    if (this == &v)
+            return *this;
+    TDynamicVector tmp(v);
+    swap(*this, tmp); // swap v, this? or return v?
+    return *this;
   }
   TDynamicVector& operator=(TDynamicVector&& v) noexcept
   {
+    swap(*this, v);
+    return *this;
   }
 
   size_t size() const noexcept { return sz; }
