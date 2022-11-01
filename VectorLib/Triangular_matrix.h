@@ -3,6 +3,9 @@
 
 const int MAX_TR_MATRIX_SIZE = 15000;
 
+// Динамическая нижне-треугольная матрица - 
+// шаблонная матрица на динамической памяти
+
 template<typename T>
 class TTriangularDynamicMatrix : private TDynamicVector<TDynamicVector<T>>
 {
@@ -18,15 +21,19 @@ public:
   using TDynamicVector<TDynamicVector<T>>::size;
   using TDynamicVector<TDynamicVector<T>>::at;
 
+  // сравнение
   bool operator==(const TTriangularDynamicMatrix<T>& m) const noexcept;
   bool operator!=(const TTriangularDynamicMatrix<T>& m) const noexcept;
 
+  // матрично-скалярные операции
   TTriangularDynamicMatrix<T> operator*(const T& val);
 
+  // матрично-матричные операции
   TTriangularDynamicMatrix<T> operator+(const TTriangularDynamicMatrix<T>& m);
   TTriangularDynamicMatrix<T> operator-(const TTriangularDynamicMatrix<T>& m);
   TTriangularDynamicMatrix<T> operator*(const TTriangularDynamicMatrix<T>& m);
 
+  // ввод/вывод
   template<typename T>
   friend std::istream& operator>>(std::istream& istr, TTriangularDynamicMatrix<T>& v);
 
@@ -38,6 +45,15 @@ template<typename T>
 inline TTriangularDynamicMatrix<T>::TTriangularDynamicMatrix(size_t s) : TDynamicVector<TDynamicVector<T>>(s)
 {
   if (s > MAX_TR_MATRIX_SIZE) throw "s > MAX_MATRIX_SIZE";
+  //if (s > 0)
+  //{
+  //  sz = s;
+  //  pMem = new TDynamicVector<T>[sz];
+  //  for (int i = 0; i < sz; i++)
+  //  {
+  //    pMem[i] = TDynamicVector<T>(i + 1);
+  //  }
+  //}
   sz = s;
   pMem = new TDynamicVector<T>[sz];
   for (int i = 0; i < sz; i++)

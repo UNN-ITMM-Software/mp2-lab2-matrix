@@ -7,6 +7,8 @@ const int MAX_VECTOR_SIZE = 100000000;
 template<typename T>
 class TVectorIterator;
 
+// Динамический вектор - 
+// шаблонный вектор на динамической памяти
 template<typename T>
 class TDynamicVector
 {
@@ -23,25 +25,31 @@ public:
   TDynamicVector<T>& operator=(TDynamicVector<T>&& v) noexcept;
   size_t size() const noexcept;
 
+  // индексация
   T& operator[](size_t ind);
   const T& operator[](size_t ind) const;
 
+  // индексация с контролем
   T& at(size_t ind);
   const T& at(size_t ind) const;
 
+  // сравнение
   bool operator==(const TDynamicVector<T>& v) const noexcept;
   bool operator!=(const TDynamicVector<T>& v) const noexcept;
 
+  // скалярные операции
   TDynamicVector<T> operator+(T val);
   TDynamicVector<T> operator-(double val);
   TDynamicVector<T> operator*(double val);
 
+  // векторные операции
   TDynamicVector<T> operator+(const TDynamicVector<T>& v);
   TDynamicVector<T> operator-(const TDynamicVector<T>& v);
   T operator*(const TDynamicVector<T>& v);
 
   friend void swap(TDynamicVector<T>& lhs, TDynamicVector<T>& rhs) noexcept;
 
+  // ввод/вывод
   template<typename T>
   friend std::istream& operator>>(std::istream& istr, TDynamicVector<T>& v);
 
@@ -294,17 +302,18 @@ template<typename T>
 std::istream& operator>>(std::istream& istr, TDynamicVector<T>& v)
 {
   for (size_t i = 0; i < v.sz; i++)
-    istr >> v.pMem[i];
+    istr >> v.pMem[i]; // требуется оператор>> для типа T
   return istr;
 }
 template<typename T>
 std::ostream& operator<<(std::ostream& ostr, const TDynamicVector<T>& v)
 {
   for (size_t i = 0; i < v.sz; i++)
-    ostr << v.pMem[i] << ' '; 
+    ostr << v.pMem[i] << ' '; // требуется оператор<< для типа T
   return ostr;
 }
 
+//==============================================================================================================//
 
 template<typename T>
 class TVectorIterator

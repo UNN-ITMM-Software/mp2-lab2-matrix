@@ -1,6 +1,5 @@
-#include "Lent_Matrix.h"
+#include "Lent_matrix.h"
 #include <gtest.h>
-
 
 TEST(TLentDynamicMatrix, can_create_matrix_with_positive_length_and_positive_width)
 {

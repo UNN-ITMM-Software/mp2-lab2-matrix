@@ -1,6 +1,5 @@
-#include "Triangular_Matrix.h"
+#include "Triangular_matrix.h"
 #include <gtest.h>
-
 
 TEST(TTriangularDynamicMatrix, can_create_matrix_with_positive_length)
 {
@@ -163,7 +162,7 @@ TEST(TTriangularDynamicMatrix, can_multiplication_matrixes_with_equal_size)
   m[2][0] = 7; m[2][1] = 8; m[2][2] = 9;
 
   v[0][0] = 11;
-  v[1][0] = 14; v[1][1] = 15;
+  v[1][0] = 14; v[1][1] = 15; 
   v[2][0] = 17; v[2][1] = 18; v[2][2] = 19;
 
   ASSERT_NO_THROW(m * v);

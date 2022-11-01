@@ -1,8 +1,10 @@
-п»ї#pragma once
+#pragma once
 #include "Vector.h"
 
 const int MAX_MATRIX_SIZE = 10000;
 
+// Динамическая матрица - 
+// шаблонная матрица на динамической памяти
 
 template<typename T>
 class TDynamicMatrix : private TDynamicVector<TDynamicVector<T>>
@@ -18,21 +20,21 @@ public:
   using TDynamicVector<TDynamicVector<T>>::size;
   using TDynamicVector<TDynamicVector<T>>::at;
 
-
+  // сравнение
   bool operator==(const TDynamicMatrix<T>& m) const noexcept;
 
-
+  // матрично-скалярные операции
   TDynamicMatrix<T> operator*(const T& val);
 
-
+  // матрично-векторные операции
   TDynamicVector<T> operator*(const TDynamicVector<T>& v);
 
- 
+  // матрично-матричные операции
   TDynamicMatrix<T> operator+(const TDynamicMatrix<T>& m);
   TDynamicMatrix<T> operator-(const TDynamicMatrix<T>& m);
   TDynamicMatrix<T> operator*(const TDynamicMatrix<T>& m);
 
-
+  // ввод/вывод
   template<typename T>
   friend std::istream& operator>>(std::istream& istr, TDynamicMatrix<T>& v);
 

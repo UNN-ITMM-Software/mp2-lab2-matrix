@@ -1,10 +1,10 @@
-п»ї#pragma once
+#pragma once
 #include "Vector.h"
 
 const int MAX_LENT_MATRIX_SIZE = 10000;
 
-// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ - 
-// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+// Динамическая ленточная матрица - 
+// шаблонная матрица на динамической памяти
 
 template<typename T>
 class TLentDynamicMatrix : private TDynamicVector<TDynamicVector<T>>
@@ -24,24 +24,24 @@ public:
   using TDynamicVector<TDynamicVector<T>>::size;
   using TDynamicVector<TDynamicVector<T>>::at;
 
-  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+  // оператор присваивания
   TLentDynamicMatrix<T>& operator=(const TLentDynamicMatrix<T>& p);
 
-  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+  // оператор перемещения
   TLentDynamicMatrix<T>& operator=(TLentDynamicMatrix<T>&& p);
 
-  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+  // сравнение
   bool operator==(const TLentDynamicMatrix<T>& m) const noexcept;
   bool operator!=(const TLentDynamicMatrix<T>& m) const noexcept;
 
-  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+  // матрично-скалярные операции
   TLentDynamicMatrix<T> operator*(const T& val);
 
-  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+  // матрично-матричные операции
   TLentDynamicMatrix<T> operator+(const TLentDynamicMatrix<T>& m);
   TLentDynamicMatrix<T> operator-(const TLentDynamicMatrix<T>& m);
 
-  // пїЅпїЅпїЅпїЅ/пїЅпїЅпїЅпїЅпїЅ
+  // ввод/вывод
   template<typename T>
   friend std::istream& operator>>(std::istream& istr, TLentDynamicMatrix<T>& v);
 
@@ -214,65 +214,65 @@ inline std::ostream& operator<<(std::ostream& ostr, const TLentDynamicMatrix<T>&
     ostr << v.pMem[i][0] << "\t";
   ostr << std::endl;
 
-  int c = v.width;
-  while (c <= v.width + v.width - 2)
-  {
-    int i = c;
-    int j = 0;
+ int c = v.width;
+ while (c <= v.width + v.width - 2)
+ {
+   int i = c;
+   int j = 0;
 
-    while (i != v.width - 1)
-    {
-      ostr << v.pMem[i][j] << "\t";
-      i--;
-      j++;
-    }
+   while (i != v.width - 1)
+   {
+     ostr << v.pMem[i][j] << "\t";
+     i--;
+     j++;
+   }
 
-    while (i >= 0)
-    {
-      ostr << v.pMem[i][j] << "\t";
-      i--;
-    }
-    ostr << std::endl;
-    c++;
-  }
+   while (i >= 0)
+   {
+     ostr << v.pMem[i][j] << "\t";
+     i--;
+   }
+   ostr << std::endl;
+   c++;
+ }
+ 
+ int tmp = v.pMem[0].size() - v.width;
+ int s = 1;
 
-  int tmp = v.pMem[0].size() - v.width;
-  int s = 1;
+ for (int k = 1; k <= v.sz - v.width; k++)
+ {
+   int i = v.width + v.width - 2;
+   int j = k;
+   for (int l = 0; l < k; l++)
+     ostr << "\t";
 
-  for (int k = 1; k <= v.sz - v.width; k++)
-  {
-    int i = v.width + v.width - 2;
-    int j = k;
-    for (int l = 0; l < k; l++)
-      ostr << "\t";
+   while (i != v.width - 1)
+   {
+     ostr << v.pMem[i][j] << "\t";
+     i--;
+     j++;
+   }
+   
+   if (tmp != 0)
+   {
+     while (i >= 0)
+     {
+       ostr << v.pMem[i][j] << "\t";
+       i--;
+     }
+     tmp--;
+   }
+   else
+   {
+     while (i >= s)
+     {
+       ostr << v.pMem[i][j] << "\t";
+       i--;
+     }
+     s++;
+   }
+   ostr << std::endl;
+ }
 
-    while (i != v.width - 1)
-    {
-      ostr << v.pMem[i][j] << "\t";
-      i--;
-      j++;
-    }
-
-    if (tmp != 0)
-    {
-      while (i >= 0)
-      {
-        ostr << v.pMem[i][j] << "\t";
-        i--;
-      }
-      tmp--;
-    }
-    else
-    {
-      while (i >= s)
-      {
-        ostr << v.pMem[i][j] << "\t";
-        i--;
-      }
-      s++;
-    }
-    ostr << std::endl;
-  }
-
-  return ostr;
+ return ostr;
 }

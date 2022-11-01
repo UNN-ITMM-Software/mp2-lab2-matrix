@@ -1,6 +1,6 @@
 #include "Vector.h"
-#include <gtest.h>
 
+#include <gtest.h>
 
 TEST(TDynamicVector, can_create_vector_with_positive_length)
 {
@@ -185,7 +185,7 @@ TEST(TDynamicVector, can_multiply_vectors_with_equal_size)
   TDynamicVector<int> a(4), b(4);
   a[0] = 2; a[1] = 3; a[2] = 5; a[3] = 7;
   b[0] = 4; b[1] = 1; b[2] = 2; b[3] = 9;
-  EXPECT_EQ(84, a * b);
+  EXPECT_EQ(84 , a * b);
 }
 
 TEST(TDynamicVector, cant_multiply_vectors_with_not_equal_size)

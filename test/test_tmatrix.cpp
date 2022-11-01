@@ -1,7 +1,6 @@
 #include "Matrix.h"
 #include <gtest.h>
 
-
 TEST(TDynamicMatrix, can_create_matrix_with_positive_length)
 {
   ASSERT_NO_THROW(TDynamicMatrix<int> m(5));
@@ -169,7 +168,7 @@ TEST(TDynamicMatrix, can_multiplication_matrixes_with_equal_size)
   ASSERT_NO_THROW(m * v);
   m = m * v;
 
-  EXPECT_EQ(90, m[0][0]);
+  EXPECT_EQ(90, m[0][0]); 
   EXPECT_EQ(96, m[0][1]);
   EXPECT_EQ(102, m[0][2]);
   EXPECT_EQ(216, m[1][0]);
