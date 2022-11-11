@@ -3,9 +3,6 @@
 
 const int MAX_MATRIX_SIZE = 10000;
 
-// Äèíàìè÷åñêàÿ ìàòðèöà - 
-// øàáëîííàÿ ìàòðèöà íà äèíàìè÷åñêîé ïàìÿòè
-
 template<typename T>
 class TDynamicMatrix : private TDynamicVector<TDynamicVector<T>>
 {
@@ -20,21 +17,16 @@ public:
   using TDynamicVector<TDynamicVector<T>>::size;
   using TDynamicVector<TDynamicVector<T>>::at;
 
-  // ñðàâíåíèå
   bool operator==(const TDynamicMatrix<T>& m) const noexcept;
 
-  // ìàòðè÷íî-ñêàëÿðíûå îïåðàöèè
   TDynamicMatrix<T> operator*(const T& val);
 
-  // ìàòðè÷íî-âåêòîðíûå îïåðàöèè
   TDynamicVector<T> operator*(const TDynamicVector<T>& v);
 
-  // ìàòðè÷íî-ìàòðè÷íûå îïåðàöèè
   TDynamicMatrix<T> operator+(const TDynamicMatrix<T>& m);
   TDynamicMatrix<T> operator-(const TDynamicMatrix<T>& m);
   TDynamicMatrix<T> operator*(const TDynamicMatrix<T>& m);
 
-  // ââîä/âûâîä
   template<typename T>
   friend std::istream& operator>>(std::istream& istr, TDynamicMatrix<T>& v);
 
