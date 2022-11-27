@@ -27,6 +27,7 @@ public:
   TDynamicVector(size_t size = 1);
   TDynamicVector(T* arr, size_t s);
   TDynamicVector(const TDynamicVector<T>& v);
+  TDynamicVector(const TDynamicVector<T>&& v) noexcept;
   TDynamicVector(TDynamicVector<T>&& v) noexcept;
   ~TDynamicVector();
   TDynamicVector<T>& operator=(const TDynamicVector<T>& v);
@@ -53,12 +54,14 @@ public:
   // векторные операции
   TDynamicVector<T> operator+(const TDynamicVector<T>& v);
   TDynamicVector<T> operator-(const TDynamicVector<T>& v);
-  T operator*(const TDynamicVector<T>& v) noexcept(noexcept(T()));
+  T operator*(const TDynamicVector<T>& v);
 
   friend void swap(TDynamicVector<T>& lhs, TDynamicVector<T>& rhs) noexcept;
 
   // ввод/вывод
+  template<typename T>
   friend istream& operator>>(istream& istr, TDynamicVector<T>& v);
+  template<typename T>
   friend ostream& operator<<(ostream& ostr, const TDynamicVector<T>& v);
 
   TVectorIterator<T> begin();
@@ -68,23 +71,44 @@ public:
 template<typename T>
 inline TDynamicVector<T>::TDynamicVector(size_t size)
 {
-  size(sz);
+  if (size <= 0 || size > MAX_VECTOR_SIZE)
+    throw "TDynamicVector(size_t size) size <= 0 || size > MAX_VECTOR_SIZE";
+  sz = size;
   pMem = new T[size];
 }
 
 template<typename T>
 inline TDynamicVector<T>::TDynamicVector(T* arr, size_t s)
 {
-  size(s);
-
+  if (size <= 0 || size > MAX_VECTOR_SIZE)
+    throw "TDynamicVector(T* arr, size_t s) size <= 0 || size > MAX_VECTOR_SIZE";
   if (arr == nullptr) throw "TDynamicVector arr == nullptr";
+
+  sz = size;
   pMem = new T[s];
   for (int i = 0; i < s; i++)
     pMem[i] = arr[i];
 }
 
 template<typename T>
-inline TDynamicVector<T>::TDynamicVector(TDynamicVector<T>&& v) noexcept
+inline TDynamicVector<T>::TDynamicVector(const TDynamicVector<T>& v)
+{
+  if (v.pMem == nullptr)
+  {
+    sz = 0;
+    pMem = nullptr;
+  }
+  else
+  {
+    sz = v.sz;
+    pMem = new T[sz];
+    for (int i = 0; i < sz; i++)
+      pMem[i] = v.pMem[i];
+  }
+}
+
+template<typename T>
+inline TDynamicVector<T>::TDynamicVector(const TDynamicVector<T>&& v) noexcept
 {
   if (v.pMem == nullptr)
   {
@@ -127,7 +151,7 @@ inline TDynamicVector<T>& TDynamicVector<T>::operator=(const TDynamicVector<T>& 
   if (this != &v)
   {
     if (pMem != nullptr)
-      delete{} pMem;
+      delete[] pMem;
 
     if (v.pMem == nullptr)
     {
@@ -137,7 +161,7 @@ inline TDynamicVector<T>& TDynamicVector<T>::operator=(const TDynamicVector<T>& 
     else
     {
       sz = v.sz;
-      pMem = new T[size];
+      pMem = new T[sz];
 
       for (int i = 0; i < sz; i++)
         pMem[i] = v.pMem[i];
@@ -168,8 +192,6 @@ inline TDynamicVector<T>& TDynamicVector<T>::operator=(TDynamicVector<T>&& v) no
 template<typename T>
 inline size_t TDynamicVector<T>::size() const noexcept
 {
-  if (size <= 0 || size > MAX_VECTOR_SIZE)
-    throw "TDynamicVector(size_t size) size <= 0 || size > MAX_VECTOR_SIZE";
   return sz;
 }
 
@@ -225,40 +247,31 @@ inline bool TDynamicVector<T>::operator!=(const TDynamicVector<T>& v) const noex
 template<typename T>
 inline TDynamicVector<T> TDynamicVector<T>::operator+(T val)
 {
-  if (sz != v.sz) throw ":operator+ sz != v.sz";
-
-  TDynamicVector res(*this);
-
+  if (pMem == nullptr) throw "operator+(T val) pMem == nullptr";
+  TDynamicVector tmp(*this);
   for (int i = 0; i < sz; i++)
-    res.pMem[i] += val;
-
-  return res;
+    tmp.pMem[i] += val;
+  return tmp;
 }
 
 template<typename T>
 inline TDynamicVector<T> TDynamicVector<T>::operator-(T val)
 {
-  if (sz != v.sz) throw ":operator- sz != v.sz";
-
-  TDynamicVector res(*this);
-
+  if (pMem == nullptr) throw "operator-(double val) pMem == nullptr";
+  TDynamicVector<T> tmp(*this);
   for (int i = 0; i < sz; i++)
-    res.pMem[i] -= val;
-
-  return res;
+    tmp.pMem[i] -= val;
+  return tmp;
 }
 
 template<typename T>
 inline TDynamicVector<T> TDynamicVector<T>::operator*(T val)
 {
-  if (sz != v.sz) throw ":operator* sz != v.sz";
-
-  TDynamicVector res(*this);
-
+  if (pMem == nullptr) throw "operator*(double val) pMem == nullptr";
+  TDynamicVector<T> tmp(*this);
   for (int i = 0; i < sz; i++)
-    res.pMem[i] *= val;
-
-  return res;
+    tmp.pMem[i] *= val;
+  return tmp;
 }
 
 template<typename T>
@@ -288,12 +301,12 @@ inline TDynamicVector<T> TDynamicVector<T>::operator-(const TDynamicVector<T>& v
 }
 
 template<typename T>
-inline T TDynamicVector<T>::operator*(const TDynamicVector<T>& v) noexcept(noexcept(T()))
+inline T TDynamicVector<T>::operator*(const TDynamicVector<T>& v)
 {
-  if (sz != v.sz) throw ":operator* sz != v.sz";
+  if (pMem == nullptr) throw "operator*(const TDynamicVector& v) pMem == nullptr";
+  if (sz != v.sz) throw "operator*(const TDynamicVector& v) sz != v.sz";
 
-  T res(*this);
-
+  T res = 0;
   for (int i = 0; i < sz; i++)
     res += pMem[i] * v.pMem[i];
 

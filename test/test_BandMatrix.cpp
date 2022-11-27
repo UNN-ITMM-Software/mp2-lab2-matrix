@@ -127,7 +127,7 @@ TEST(TBandDynamicMatrix, matrices_with_different_size_are_not_equal)
 TEST(TBandDynamicMatrix, can_add_matrices_with_equal_size)
 {
   TBandDynamicMatrix<int> a(5), b(5);
-  b[0][0] = 1;
+  a[0][0] = 1;
   b[0][0] = 1;
   ASSERT_NO_THROW(a + b);
   a = a + b;
@@ -137,7 +137,7 @@ TEST(TBandDynamicMatrix, can_add_matrices_with_equal_size)
 TEST(TBandDynamicMatrix, cant_add_matrices_with_not_equal_size)
 {
   TBandDynamicMatrix<int> a(5), b(7);
-  ASSERT_ANY_THROW(b + b);
+  ASSERT_ANY_THROW(a + b);
 }
 
 TEST(TBandDynamicMatrix, can_subtract_matrices_with_equal_size)

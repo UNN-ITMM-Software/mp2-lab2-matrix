@@ -45,7 +45,7 @@ public:
 template<typename T>
 inline TBandDynamicMatrix<T>::TBandDynamicMatrix(size_t s, size_t width)
 {
-  if (s > MAX_LENT_MATRIX_SIZE || s <= 0) 
+  if (s > MAX_BAND_MATRIX_SIZE || s <= 0) 
     throw "TBandDynamicMatrix(size_t s, size_t width) s > MAX_MATRIX_SIZE || s <= 0";
   if (width >= s || width < 1) 
     throw "TBandDynamicMatrix(size_t s, size_t width) width >= s || width < 1";
@@ -87,7 +87,7 @@ template<typename T>
 inline TBandDynamicMatrix<T>& TBandDynamicMatrix<T>::operator=(const TBandDynamicMatrix<T>& p)
 {
   if (this == &p) return *this;
-  if (pMem != nullptr) this->~TLentDynamicMatrix();
+  if (pMem != nullptr) this->~TBandDynamicMatrix();
 
   sz = p.sz;
   width = p.width;
@@ -105,7 +105,7 @@ inline TBandDynamicMatrix<T>& TBandDynamicMatrix<T>::operator=(const TBandDynami
 template<typename T>
 inline TBandDynamicMatrix<T>& TBandDynamicMatrix<T>::operator=(TBandDynamicMatrix<T>&& p)
 {
-  if (pMem != nullptr) this->~TLentDynamicMatrix();
+  if (pMem != nullptr) this->~TBandDynamicMatrix();
 
   sz = p.sz;
   width = p.width;
@@ -150,7 +150,7 @@ inline TBandDynamicMatrix<T> TBandDynamicMatrix<T>::operator+(const TBandDynamic
 {
   if (this->sz != m.sz || this->width != m.width) throw "operator+(const TLentDynamicMatrix<T>& m) sz != m.sz || width != m.width";
 
-  TLentDynamicMatrix<T> result(sz, width);
+  TBandDynamicMatrix<T> result(m.sz, m.width);
   for (int i = 0; i < this->width + this->width - 1; i++)
     result.pMem[i] = pMem[i] + m.pMem[i];
   return result;
@@ -161,7 +161,7 @@ inline TBandDynamicMatrix<T> TBandDynamicMatrix<T>::operator-(const TBandDynamic
 {
   if (this->sz != m.sz || this->width != m.width) throw "operator+(const TLentDynamicMatrix<T>& m) sz != m.sz || width != m.width";
 
-  TLentDynamicMatrix<T> result(sz, width);
+  TBandDynamicMatrix<T> result(m.sz, m.width);
   for (int i = 0; i < this->width + this->width - 1; i++)
     result.pMem[i] = pMem[i] - m.pMem[i];
   return result;

@@ -1,170 +1,191 @@
-#include "tBandMatrix.h"
+#include "tTriangularMatrix.h"
 #include <gtest.h>
 
-TEST(TBandDynamicMatrix, can_create_matrix_with_positive_length_and_positive_width)
+TEST(TTriangularDynamicMatrix, can_create_matrix_with_positive_length)
 {
-  ASSERT_NO_THROW(TBandDynamicMatrix<int> m(5, 3));
+  ASSERT_NO_THROW(TTriangularDynamicMatrix<int> m(5));
 }
 
-TEST(TBandDynamicMatrix, cant_create_too_large_matrix)
+TEST(TTriangularDynamicMatrix, cant_create_too_large_matrix)
 {
-  ASSERT_ANY_THROW(TBandDynamicMatrix<int> m(MAX_BAND_MATRIX_SIZE + 1));
+  ASSERT_ANY_THROW(TTriangularDynamicMatrix<int> m(MAX_TR_MATRIX_SIZE + 1));
 }
 
-TEST(TBandDynamicMatrix, throws_when_create_matrix_with_negative_length_and_negative_width)
+TEST(TTriangularDynamicMatrix, throws_when_create_matrix_with_negative_length)
 {
-  ASSERT_ANY_THROW(TBandDynamicMatrix<int> m(-5, -3));
+  ASSERT_ANY_THROW(TTriangularDynamicMatrix<int> m(-5));
 }
 
-TEST(TBandDynamicMatrix, can_create_copied_matrix)
+TEST(TTriangularDynamicMatrix, can_create_copied_matrix)
 {
-  TBandDynamicMatrix<int> a(5, 3);
+  TTriangularDynamicMatrix<int> m(5);
 
-  ASSERT_NO_THROW(TBandDynamicMatrix<int> b(a));
+  ASSERT_NO_THROW(TTriangularDynamicMatrix<int> m1(m));
 }
 
-TEST(TBandDynamicMatrix, copied_matrix_is_equal_to_source_one)
+TEST(TTriangularDynamicMatrix, copied_matrix_is_equal_to_source_one)
 {
-  TBandDynamicMatrix<int> a(5, 3);
-  a[0][0] = 0;
-  a[1][1] = 1;
-  TBandDynamicMatrix<int> b(a);
-  EXPECT_EQ(0, b[0][0]);
-  EXPECT_EQ(1, b[1][1]);
-  EXPECT_EQ(true, a == b);
+  TTriangularDynamicMatrix<int> m(5);
+  m[0][0] = 1;
+  m[1][1] = 2;
+  TTriangularDynamicMatrix<int> v(m);
+  EXPECT_EQ(1, v[0][0]);
+  EXPECT_EQ(2, v[1][1]);
+  EXPECT_EQ(true, v == m);
 }
 
-TEST(TBandDynamicMatrix, copied_matrix_has_its_own_memory)
+TEST(TTriangularDynamicMatrix, copied_matrix_has_its_own_memory)
 {
-  TBandDynamicMatrix<int> a(5, 3);
-  a[0][0] = 0;
-  TBandDynamicMatrix<int> b(a);
-  int* x = &(a[0][0]);
-  int* y = &(b[0][0]);
-  EXPECT_NE(x, y);
+  TTriangularDynamicMatrix<int> m(5);
+  m[0][0] = 4;
+  TTriangularDynamicMatrix<int> v(m);
+  int* a = &(m[0][0]);
+  int* b = &(v[0][0]);
+  EXPECT_NE(a, b);
 }
 
-TEST(TBandDynamicMatrix, can_get_size)
+TEST(TTriangularDynamicMatrix, can_get_size)
 {
-  TBandDynamicMatrix<int> m(5);
+  TTriangularDynamicMatrix<int> m(5);
   EXPECT_EQ(5, m.size());
 }
 
-TEST(TBandDynamicMatrix, can_set_and_get_element)
+TEST(TTriangularDynamicMatrix, can_set_and_get_element)
 {
-  TBandDynamicMatrix<int> m(5, 3);
-  ASSERT_NO_THROW(m[0][0] = 0);
-  EXPECT_EQ(0, m[0][0]);
+  TTriangularDynamicMatrix<int> m(5);
+  ASSERT_NO_THROW(m[0][0] = 4);
+  EXPECT_EQ(4, m[0][0]);
 }
 
-TEST(TBandDynamicMatrix, throws_when_set_element_with_negative_index)
+TEST(TTriangularDynamicMatrix, throws_when_set_element_with_negative_index)
 {
-  TBandDynamicMatrix<int> m(5, 3);
+  TTriangularDynamicMatrix<int> m(5);
   ASSERT_ANY_THROW(m.at(-1).at(0));
 }
 
-TEST(TBandDynamicMatrix, throws_when_set_element_with_too_large_index)
+TEST(TTriangularDynamicMatrix, throws_when_set_element_with_too_large_index)
 {
-  TBandDynamicMatrix<int> m(5, 3);
+  TTriangularDynamicMatrix<int> m(5);
   ASSERT_ANY_THROW(m.at(5).at(0));
 }
 
-TEST(TBandDynamicMatrix, can_assign_matrix_to_itself)
+TEST(TTriangularDynamicMatrix, can_assign_matrix_to_itself)
 {
-  TBandDynamicMatrix<int> m(5, 1);
-  m[0][0] = 0;
+  TTriangularDynamicMatrix<int> m(5);
+  m[0][0] = 4;
   ASSERT_NO_THROW(m = m);
 }
 
-TEST(TBandDynamicMatrix, can_assign_matrices_of_equal_size)
+TEST(TTriangularDynamicMatrix, can_assign_matrices_of_equal_size)
 {
-  TBandDynamicMatrix<int> a(5, 1), b(5, 1);
-  a[0][0] = 0;
-  a[0][1] = 1;
-  ASSERT_NO_THROW(b = a);
-  EXPECT_EQ(0, b[0][0]);
-  EXPECT_EQ(1, b[0][1]);
-  b[0][0] = 2;
-  EXPECT_NE(2, a[0][0]);
+  TTriangularDynamicMatrix<int> m(5), v(5);
+  m[0][0] = 4;
+  m[1][0] = 76;
+  ASSERT_NO_THROW(v = m);
+  EXPECT_EQ(4, v[0][0]);
+  EXPECT_EQ(76, v[1][0]);
 }
 
-TEST(TBandDynamicMatrix, assign_operator_change_matrix_size)
+TEST(TTriangularDynamicMatrix, assign_operator_change_matrix_size)
 {
-  TBandDynamicMatrix<int> a(5), b(7);
-  ASSERT_NO_THROW(a = b);
-  a = b;
-  EXPECT_EQ(7, a.size());
+  TTriangularDynamicMatrix<int> m(5), v(7);
+  ASSERT_NO_THROW(m = v);
+  m = v;
+  EXPECT_EQ(7, m.size());
 }
 
-TEST(TBandDynamicMatrix, can_assign_matrices_of_different_size)
+TEST(TTriangularDynamicMatrix, can_assign_matrices_of_different_size)
 {
-  TBandDynamicMatrix<int> a(5), b(7);
-  a[0][0] = 0;
-  a[0][1] = 1;
-  ASSERT_NO_THROW(a = b);
+  TTriangularDynamicMatrix<int> m(5), v(7);
+  v[0][0] = 4;
+  v[1][1] = 76;
+  ASSERT_NO_THROW(m = v);
 }
 
-TEST(TBandDynamicMatrix, compare_equal_matrices_return_true)
+TEST(TTriangularDynamicMatrix, compare_equal_matrices_return_true)
 {
-  TBandDynamicMatrix<int> a(2), b(2);
-  a[0][0] = 0;
-  b[0][0] = 0;
-  EXPECT_EQ(true, a == b);
+  TTriangularDynamicMatrix<int> m(2), v(2);
+  m[0][0] = 2;
+  v[0][0] = 2;
+  EXPECT_EQ(true, m == v);
 }
 
-TEST(TBandDynamicMatrix, compare_matrix_with_itself_return_true)
+TEST(TTriangularDynamicMatrix, compare_matrix_with_itself_return_true)
 {
-  TBandDynamicMatrix<int> m(2);
+  TTriangularDynamicMatrix<int> m(2);
   EXPECT_EQ(true, m == m);
 }
 
-TEST(TBandDynamicMatrix, matrices_with_different_size_are_not_equal)
+TEST(TTriangularDynamicMatrix, matrices_with_different_size_are_not_equal)
 {
-  TBandDynamicMatrix<int> a(5), b(7);
-  EXPECT_EQ(false, a == b);
+  TTriangularDynamicMatrix<int> m(2), v(3);
+  EXPECT_EQ(false, m == v);
 }
 
-TEST(TBandDynamicMatrix, can_add_matrices_with_equal_size)
+TEST(TTriangularDynamicMatrix, can_add_matrices_with_equal_size)
 {
-  TBandDynamicMatrix<int> a(5), b(5);
-  b[0][0] = 1;
-  b[0][0] = 1;
-  ASSERT_NO_THROW(a + b);
-  a = a + b;
-  EXPECT_EQ(2, a[0][0]);
+  TTriangularDynamicMatrix<int> m(5), v(5);
+  m[0][0] = 2;
+  v[0][0] = 2;
+  ASSERT_NO_THROW(m + v);
+  m = m + v;
+  EXPECT_EQ(4, m[0][0]);
 }
 
-TEST(TBandDynamicMatrix, cant_add_matrices_with_not_equal_size)
+TEST(TTriangularDynamicMatrix, cant_add_matrices_with_not_equal_size)
 {
-  TBandDynamicMatrix<int> a(5), b(7);
-  ASSERT_ANY_THROW(b + b);
+  TTriangularDynamicMatrix<int> m(5), v(7);
+  ASSERT_ANY_THROW(m + v);
 }
 
-TEST(TBandDynamicMatrix, can_subtract_matrices_with_equal_size)
+TEST(TTriangularDynamicMatrix, can_subtract_matrices_with_equal_size)
 {
-  TBandDynamicMatrix<int> a(5), b(5);
-  a[0][0] = 1;
-  b[0][0] = 1;
-  ASSERT_NO_THROW(a - b);
-  a = a - b;
-  EXPECT_EQ(0, a[0][0]);
+  TTriangularDynamicMatrix<int> m(5), v(5);
+  m[0][0] = 2;
+  v[0][0] = 2;
+  ASSERT_NO_THROW(m - v);
+  m = m - v;
+  EXPECT_EQ(0, m[0][0]);
 }
 
-TEST(TBandDynamicMatrix, cant_subtract_matrixes_with_not_equal_size)
+TEST(TTriangularDynamicMatrix, cant_subtract_matrixes_with_not_equal_size)
 {
-  TBandDynamicMatrix<int> a(5), b(7);
-  ASSERT_ANY_THROW(a - b);
+  TTriangularDynamicMatrix<int> m(5), v(7);
+  ASSERT_ANY_THROW(m - v);
 }
 
-TEST(TBandDynamicMatrix, can_output_lent_matrixes_in_normal_form)
+TEST(TTriangularDynamicMatrix, can_multiplication_matrixes_with_equal_size)
+{
+  TTriangularDynamicMatrix<int> m(3), v(3);
+  m[0][0] = 1;
+  m[1][0] = 4; m[1][1] = 5;
+  m[2][0] = 7; m[2][1] = 8; m[2][2] = 9;
+
+  v[0][0] = 11;
+  v[1][0] = 14; v[1][1] = 15;
+  v[2][0] = 17; v[2][1] = 18; v[2][2] = 19;
+
+  ASSERT_NO_THROW(m * v);
+  m = m * v;
+
+  EXPECT_EQ(11, m[0][0]);
+  EXPECT_EQ(114, m[1][0]);
+  EXPECT_EQ(75, m[1][1]);
+  EXPECT_EQ(342, m[2][0]);
+  EXPECT_EQ(282, m[2][1]);
+  EXPECT_EQ(171, m[2][2]);
+}
+
+TEST(TTriangularDynamicMatrix, can_output_triangular_matrixes_in_normal_form)
 {
   std::cout << std::endl;
-  TBandDynamicMatrix<int> g(7, 3);
-  g[0][0] = 1; g[0][1] = 2; g[0][2] = 3; g[0][3] = 4; g[0][4] = 5;
-  g[1][0] = 6; g[1][1] = 7; g[1][2] = 8; g[1][3] = 9; g[1][4] = 10; g[1][5] = 11;
-  g[2][0] = 12; g[2][1] = 13; g[2][2] = 14; g[2][3] = 15; g[2][4] = 16; g[2][5] = 17; g[2][6] = 18;
-  g[3][0] = 19; g[3][1] = 20; g[3][2] = 21; g[3][3] = 22; g[3][4] = 23; g[3][5] = 24;
-  g[4][0] = 25; g[4][1] = 26; g[4][2] = 27; g[4][3] = 28; g[4][4] = 29;
+  TTriangularDynamicMatrix<int> a(3), b(3);
+  a[0][0] = 1; a[1][0] = 2; a[1][1] = 3; a[2][0] = 4; a[2][1] = 5; a[2][2] = 6;
+  b[0][0] = 7; b[1][0] = 8; b[1][1] = 9; b[2][0] = 10; b[2][1] = 11; b[2][2] = 12;
 
-  std::cout << g;
+  TTriangularDynamicMatrix<int> c(3);
+
+  c = a * b;
+
+  std::cout << c;
 }

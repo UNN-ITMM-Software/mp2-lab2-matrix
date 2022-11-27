@@ -14,7 +14,7 @@ const int MAX_MATRIX_SIZE = 10000;
 // Динамическая матрица - 
 // шаблонная матрица на динамической памяти
 template<typename T>
-class TDynamicMatrix : private TDynamicVector<TDynamicVector<T>>
+class TDynamicMatrix : public TDynamicVector<TDynamicVector<T>>
 {
   using TDynamicVector<TDynamicVector<T>>::pMem;
   using TDynamicVector<TDynamicVector<T>>::sz;
@@ -52,13 +52,13 @@ inline TDynamicMatrix<T>::TDynamicMatrix(size_t s) : TDynamicVector<TDynamicVect
 {
   if (s > MAX_MATRIX_SIZE || s < 0) throw "TDynamicMatrix(size_t s) s > MAX_MATRIX_SIZE || s < 0";
   for (size_t i = 0; i < sz; i++)
-    pMem[i] = TDynamicMatrix<T>(sz);
+    pMem[i] = TDynamicVector<T>(sz);
 }
 
 template<typename T>
-inline bool TDynamicMatrix<T>::operator==(const TDynamicMatrix& m) const noexcept
+inline bool TDynamicMatrix<T>::operator==(const TDynamicMatrix<T>& m) const noexcept
 {
-  return TDynamicMatrix<TDynamicVector<T>>::operator == (m);
+  return TDynamicVector<TDynamicVector<T>>::operator == (m);
 }
 
 template<typename T>
@@ -86,8 +86,8 @@ inline TDynamicMatrix<T> TDynamicMatrix<T>::operator+(const TDynamicMatrix<T>& m
 
   TDynamicMatrix<T> result(sz);
   for (int i = 0; i < sz; i++)
-    res.pMem[i] = pMem[i] + m.pMem[i];
-  return res;
+    result.pMem[i] = pMem[i] + m.pMem[i];
+  return result;
 }
 
 template<typename T>
@@ -114,7 +114,7 @@ inline TDynamicMatrix<T> TDynamicMatrix<T>::operator*(const TDynamicMatrix<T>& m
       for (int k = 0; k < this->sz; k++)
         result[i][j] += this->pMem[i][k] * m.pMem[k][j];
     }
-  return res;
+  return result;
 }
 
 template<typename T>
@@ -125,16 +125,17 @@ inline istream& operator>>(istream& istr, TDynamicMatrix<T>& v)
     for (int j = 0; j < v.sz; j++)
       istr >> v.pMem[i][j];
   return istr;
-}
+} 
 
 template<typename T>
 inline ostream& operator<<(ostream& ostr, const TDynamicMatrix<T>& v)
 {
-  for (int i = 0; i < v.sz; i++)
-  {
-    for (int j = 0; j < v.sz; j++)
-      ostr << v.pMem[i][j] << '\t';
-    std::cout << std::endl;
-  }
+  //const int sz = v.sz;
+  //for (int i = 0; i < sz; i++)
+  //{
+  //  for (int j = 0; j < sz; j++)
+  //    ostr << v.pMem[i][j] << '\t';
+  //  std::cout << std::endl;
+  //}
   return ostr;
 }

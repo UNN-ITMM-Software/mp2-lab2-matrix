@@ -1,5 +1,6 @@
 #include "tmatrix.h"
 #include <gtest.h>
+#include "test_tVector.h"
 
 TEST(TDynamicVector, can_create_vector_with_positive_length)
 {
@@ -173,10 +174,10 @@ TEST(TDynamicVector, cant_subtract_vectors_with_not_equal_size)
 
 TEST(TDynamicVector, can_multiply_vectors_with_equal_size)
 {
-  TDynamicVector<int> a(5), b(5);
-  a[0] = 1; a[1] = 2; a[2] = 3; a[3] = 4;
-  b[0] = 5; b[1] = 6; b[2] = 7; b[3] = 8;
-  EXPECT_EQ(70, a * b);
+  TDynamicVector<int> a(4), b(4);
+  a[0] = 2; a[1] = 3; a[2] = 5; a[3] = 7;
+  b[0] = 4; b[1] = 1; b[2] = 2; b[3] = 9;
+  EXPECT_EQ(84, a * b);
 }
 
 TEST(TDynamicVector, cant_multiply_vectors_with_not_equal_size)
@@ -207,6 +208,5 @@ TEST(TDynamicVector, can_use_vector_iterator)
 
   for (auto i = c.begin(); i != c.end(); ++i)
     std::cout << *i << " ";
-
   std::cout << std::endl;
 }
